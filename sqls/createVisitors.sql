@@ -1,0 +1,6 @@
+CREATE TABLE visitors(
+	id SERIAL PRIMARY KEY,
+	fullname VARCHAR(255) NOT NULL,
+	age INT NOT NULL,
+	phone_number VARCHAR(255) NOT NULL
+);

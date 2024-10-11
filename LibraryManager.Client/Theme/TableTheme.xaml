@@ -1,0 +1,53 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Стиль для заголовков таблицы -->
+    <Style TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <!-- Нижняя граница -->
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Margin" Value="12,2,12,2"/>
+    </Style>
+
+    <!-- Стиль для строк таблицы -->
+    <Style TargetType="DataGridRow">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <!-- Нижняя граница строк -->
+    </Style>
+
+    <!-- Стиль для ячеек таблицы -->
+    <Style TargetType="DataGridCell">
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+        <!-- Правая граница ячеек -->
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="Transparent" />
+        <!-- Прозрачный фон ячеек -->
+    </Style>
+
+    <!-- Стиль для самой таблицы -->
+    <Style TargetType="DataGrid" x:Key="MinimalistDataGrid">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="GridLinesVisibility" Value="None" />
+        <!-- Без стандартных линий -->
+        <Setter Property="HeadersVisibility" Value="All" />
+        <Setter Property="RowBackground" Value="Transparent" />
+        <Setter Property="AlternatingRowBackground" Value="Transparent" />
+        <Setter Property="HorizontalGridLinesBrush" Value="White" />
+        <Setter Property="VerticalGridLinesBrush" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <!-- Убираем внешние границы -->
+    </Style>
+
+</ResourceDictionary>

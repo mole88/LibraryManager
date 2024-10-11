@@ -5,49 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManager.Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Height="600" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.DataContext>
         <local:MainViewVM/>
     </Window.DataContext>
-    <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <DataTemplate DataType="{x:Type local:BookVM}">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="{Binding Name}"/>
-                <Label Content="{Binding Author}"/>
-                <Label Content="{Binding Year}"/>
+    <Border Background="#272537"
+            CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Text="LibManage"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="White"
+                       FontSize="22"/>
+
+            <StackPanel Grid.Row="1">
+
+                <RadioButton Content="Books"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding BooksViewCommand}"/>
+
+                <RadioButton Content="Visitors"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding VisitorsViewCommand}"/>
+
+                <RadioButton Content="Authors"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding AuthorsViewCommand}"/>
+
+                <RadioButton Content="Transactions"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding TransactionsViewCommand}"/> 
+
             </StackPanel>
-        </DataTemplate>
-    </Window.Resources>
-    <Grid Margin="5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding Books}"/>
+            <TextBox Grid.Column="1"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Width="250" Height="40"
+                     Margin="5"
+                     Style="{StaticResource TextBoxTheme}"/>
 
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Add Book" Command="{Binding AddBookCommand}"/>
-            <Button Content="Sort" Command="{Binding SortBookCommand}"/>
-            <Button Content="Find" Command="{Binding FindBookCommand}"/>
-        </StackPanel>
-
-        <ListBox Grid.Column="1" ItemsSource="{Binding Visitors}"/>
-
-
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Add Visitor" Command="{Binding AddVisitorCommand}"/>
-            <Button Content="Sort" Command="{Binding AddVisitorCommand}"/>
-            <Button Content="Find" Command="{Binding AddVisitorCommand}"/>
-        </StackPanel>
-    </Grid>
+            <ContentControl Grid.Row="1" Grid.Column="1"
+                            Margin="10" Content="{Binding CurrentView}"/>
+        </Grid>
+    </Border>
 </Window>
