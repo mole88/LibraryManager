@@ -1,9 +1,10 @@
 ﻿using LibraryManager.Model;
 using System.Collections.ObjectModel;
+using LibraryManager.Client.Core;
 
 namespace LibraryManager.Client.ViewModel
 {
-    public class VisitorsPageViewModel
+    public class VisitorsPageViewModel : ObservsbleObject
     {
         private Manager _manager;
 

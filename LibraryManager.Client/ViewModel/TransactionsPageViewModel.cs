@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LibraryManager.Model;
+using LibraryManager.Client.Core;
+using System.Collections.ObjectModel;
 
 namespace LibraryManager.Client.ViewModel
 {
-    public class TransactionsPageViewModel
+    public class TransactionsPageViewModel : ObservsbleObject
     {
+        private Manager _manager;
+
+        //TODO: Нормально реализовать связь
+        public ReadOnlyObservableCollection<LibraryTransaction> Transactions => _manager.Transactions;
+        public TransactionsPageViewModel()
+        {
+            _manager = ManagerInstance.Instance;
+        }
     }
 }

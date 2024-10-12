@@ -6,7 +6,27 @@
              xmlns:local="clr-namespace:LibraryManager.Client.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <StackPanel>
+        <DataGrid AutoGenerateColumns="False" 
+          ItemsSource="{Binding Transactions}" 
+          Style="{StaticResource MinimalistDataGrid}" 
+          HeadersVisibility="All" 
+          GridLinesVisibility="None"
+          CanUserAddRows="False" 
+          CanUserResizeRows="False"
+          CanUserResizeColumns="False" 
+          CanUserSortColumns="False">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Visitor" Binding="{Binding Visitor.FullName}"/>
+                <DataGridTextColumn Header="Book" Binding="{Binding Book.Name}"/>
+                <DataGridTextColumn Header="Taken date" Binding="{Binding DateTaken}"/>
+                <DataGridTextColumn Header="Due date" Binding="{Binding DueDate}"/>
+                <DataGridTextColumn Header="Return date" Binding="{Binding ReturnDate}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </StackPanel>
 </UserControl>
