@@ -10,8 +10,8 @@
         <!-- Нижняя граница -->
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="20" />
-        <Setter Property="Margin" Value="12,2,12,2"/>
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Margin" Value="2"/>
     </Style>
 
     <!-- Стиль для строк таблицы -->
@@ -19,6 +19,8 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="White" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Style.Triggers>
+        </Style.Triggers>
         <!-- Нижняя граница строк -->
     </Style>
 
@@ -47,7 +49,15 @@
         <Setter Property="HorizontalGridLinesBrush" Value="White" />
         <Setter Property="VerticalGridLinesBrush" Value="White" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <!-- Убираем внешние границы -->
+        
+        
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="CanUserReorderColumns" Value="False"/>
+        <Setter Property="CanUserResizeColumns" Value="False"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="CanUserSortColumns" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
     </Style>
 
 </ResourceDictionary>

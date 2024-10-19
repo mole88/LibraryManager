@@ -1,8 +1,6 @@
 ﻿using LibraryManager.Model;
 using LibraryManager.Client.ViewModel;
-using System.Windows.Controls;
 using LibraryManager.Client.Core;
-using LibraryManager.Client.View;
 
 namespace LibraryManager.Client
 {
@@ -63,7 +61,5 @@ namespace LibraryManager.Client
                 OnPropertyChanged();
             }
         }
-
-        //public BooksPageViewModel BooksVM => new BooksPageViewModel();
     }
 }

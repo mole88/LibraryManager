@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LibraryManager.Client.ViewModel;
+using LibraryManager.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,19 @@ namespace LibraryManager.Client.View
         public BooksPageView()
         {
             InitializeComponent();
+        }
+        private void DataGridRow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var row = sender as DataGridRow;
+            if (row != null && row.DataContext is Book selectedBook)
+            {
+                // Вызов команды через ViewModel
+                var viewModel = (BooksPageViewModel)this.DataContext;
+                if (viewModel.RowSelectedCommand.CanExecute(selectedBook))
+                {
+                    viewModel.RowSelectedCommand.Execute(selectedBook);
+                }
+            }
         }
     }
 }
