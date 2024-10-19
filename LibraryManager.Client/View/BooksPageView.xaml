@@ -27,18 +27,5 @@
 
         </DataGrid>
 
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Add" HorizontalAlignment="Left"
-                VerticalAlignment="Center" Margin="10"
-                Click="Button_Click"/>
-            <Button Content="Remove" HorizontalAlignment="Left"
-                VerticalAlignment="Center" Margin="10"
-                Click="Button_Click"/>
-
-            <Button Content="Edit" HorizontalAlignment="Left"
-                VerticalAlignment="Center" Margin="10"
-                Click="Button_Click"/>
-        </StackPanel>
-        
     </StackPanel>
 </UserControl>
