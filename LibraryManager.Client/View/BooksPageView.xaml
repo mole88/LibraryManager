@@ -13,31 +13,67 @@
         <Border Background="Coral"
                 CornerRadius="10"
                 Padding="4">
-            <DataGrid ItemsSource="{Binding Books}" 
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      GridLinesVisibility="None"
-                      HeadersVisibility="Column"
-                      HorizontalGridLinesBrush="Transparent"
-                      VerticalGridLinesBrush="Transparent"
-                      CanUserSortColumns="False"
-                      Style="{StaticResource MinimalistDataGrid}"
-                      SelectedItem="{Binding SelectedBook}">
+            <ListView ItemsSource="{Binding Books}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Background="Transparent">
+                <ListView.View>
+                    <GridView>
+                        <!-- Столбец Id -->
+                        <GridViewColumn Header="Id" Width="30">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="*"/>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="7*"/>
-                    <DataGridTextColumn Header="Author" Binding="{Binding BookAuthor.FullName}" Width="7*"/>
-                    <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="3*"/>
-                </DataGrid.Columns>
+                        <!-- Столбец Name -->
+                        <GridViewColumn Header="Name" Width="210">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <EventSetter Event="MouseLeftButtonUp" Handler="DataGridRow_MouseLeftButtonUp"/>
-                    </Style>
-                </DataGrid.RowStyle>
-            </DataGrid>
+                        <!-- Столбец Author -->
+                        <GridViewColumn Header="Author" Width="210">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding BookAuthor.FullName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <!-- Столбец Year -->
+                        <GridViewColumn Header="Year" Width="90">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Year}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <!-- Столбец с кнопкой -->
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Content="⋮" Width="20" Height="20" HorizontalAlignment="Right">
+                                            <Button.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Option 1" Command="{Binding DataContext.Option1Command, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                                                    <MenuItem Header="Option 2" Command="{Binding DataContext.Option2Command, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                                                </ContextMenu>
+                                            </Button.ContextMenu>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Border>
     </StackPanel>
 </UserControl>
