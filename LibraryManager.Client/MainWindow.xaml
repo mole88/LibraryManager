@@ -27,7 +27,6 @@
                 <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
 
-
             <TextBlock Text="LibManage"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -37,20 +36,24 @@
             <StackPanel Grid.Row="1">
 
                 <RadioButton Content="Books"
+                             Tag="..\Images\book32.png"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding BooksViewCommand}"/>
+                             Command="{Binding BooksViewCommand}"
+                             IsChecked="True"/>
 
                 <RadioButton Content="Visitors"
-                             Height="50"
+                             Tag="..\Images\user32.png"
+                             Height="50" 
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding VisitorsViewCommand}"/>
 
                 <RadioButton Content="Authors"
+                             Tag="../Images/author32.png"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
@@ -58,6 +61,7 @@
                              Command="{Binding AuthorsViewCommand}"/>
 
                 <RadioButton Content="Transactions"
+                             Tag="../Images/transactions32.png"
                              Height="50"
                              Foreground="White"
                              FontSize="14"

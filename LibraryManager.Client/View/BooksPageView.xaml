@@ -3,22 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:local="clr-namespace:LibraryManager.Client.View"
-             xmlns:vms="clr-namespace:LibraryManager.Client.ViewModel"
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <Border Background="Coral"
-                CornerRadius="10"
+        <Border CornerRadius="10"
                 Padding="4">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 2">
+                    <GradientStop Color="#ff6600" Offset="0.1"/>
+                    <GradientStop Color="#ff3300" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <ListView ItemsSource="{Binding Books}"
-                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Background="Transparent">
+                      SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                      Height="400"
+                      Style="{StaticResource ListViewStyle}"
+                      ItemContainerStyle="{StaticResource ListViewItemStyle}">
+
                 <ListView.View>
-                    <GridView>
-                        <!-- Столбец Id -->
-                        <GridViewColumn Header="Id" Width="30">
+                    <GridView AllowsColumnReorder="False"
+                              ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+
+                        <GridViewColumn Header="Id" Width="40">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Id}"/>
@@ -26,8 +33,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <!-- Столбец Name -->
-                        <GridViewColumn Header="Name" Width="210">
+                        <GridViewColumn Header="Name" Width="290">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
@@ -35,8 +41,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <!-- Столбец Author -->
-                        <GridViewColumn Header="Author" Width="210">
+                        <GridViewColumn Header="Author" Width="250">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding BookAuthor.FullName}" />
@@ -44,33 +49,13 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <!-- Столбец Year -->
                         <GridViewColumn Header="Year" Width="90">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Year}" />
+                                    <TextBlock Text="{Binding Year}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-
-                        <!-- Столбец с кнопкой -->
-                        <GridViewColumn Width="Auto">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button Content="⋮" Width="20" Height="20" HorizontalAlignment="Right">
-                                            <Button.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Header="Option 1" Command="{Binding DataContext.Option1Command, RelativeSource={RelativeSource AncestorType=ListView}}" />
-                                                    <MenuItem Header="Option 2" Command="{Binding DataContext.Option2Command, RelativeSource={RelativeSource AncestorType=ListView}}" />
-                                                </ContextMenu>
-                                            </Button.ContextMenu>
-                                        </Button>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
                     </GridView>
                 </ListView.View>
             </ListView>

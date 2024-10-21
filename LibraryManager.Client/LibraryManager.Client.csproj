@@ -9,11 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\author32.png" />
+    <None Remove="Images\book32.png" />
+    <None Remove="Images\transactions32.png" />
+    <None Remove="Images\user32.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LibraryManager.Model\LibraryManager.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\author32.png" />
+    <Resource Include="Images\book32.png" />
+    <Resource Include="Images\transactions32.png" />
+    <Resource Include="Images\user32.png" />
   </ItemGroup>
 
 </Project>

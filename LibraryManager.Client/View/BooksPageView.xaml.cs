@@ -26,18 +26,5 @@ namespace LibraryManager.Client.View
         {
             InitializeComponent();
         }
-        private void DataGridRow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var row = sender as DataGridRow;
-            if (row != null && row.DataContext is Book selectedBook)
-            {
-                // Вызов команды через ViewModel
-                var viewModel = (BooksPageViewModel)this.DataContext;
-                if (viewModel.RowSelectedCommand.CanExecute(selectedBook))
-                {
-                    viewModel.RowSelectedCommand.Execute(selectedBook);
-                }
-            }
-        }
     }
 }

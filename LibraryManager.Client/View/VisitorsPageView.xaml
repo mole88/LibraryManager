@@ -7,24 +7,58 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <DataGrid AutoGenerateColumns="False" 
-              ItemsSource="{Binding Visitors}" 
-              Style="{StaticResource MinimalistDataGrid}" 
-              HeadersVisibility="All" 
-              GridLinesVisibility="None"
-              CanUserAddRows="False" 
-              CanUserResizeRows="False"
-              CanUserResizeColumns="False" 
-              CanUserSortColumns="False">
+        <Border CornerRadius="10"
+                Padding="4">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 2">
+                    <GradientStop Color="#ff6600" Offset="0.1"/>
+                    <GradientStop Color="#ff3300" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <ListView ItemsSource="{Binding Visitors}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  Height="400"
+                  Style="{StaticResource ListViewStyle}"
+                  ItemContainerStyle="{StaticResource ListViewItemStyle}">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Fullname" Binding="{Binding FullName}"/>
-                <DataGridTextColumn Header="Age" Binding="{Binding Age}"/>
-                <DataGridTextColumn Header="Phone number" Binding="{Binding PhoneNumber}"/>
-            </DataGrid.Columns>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False"
+                  ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
 
-        </DataGrid>
+                        <GridViewColumn Header="Id" Width="40">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
+                        <GridViewColumn Header="Fullname" Width="300">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FullName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Age" Width="90">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Age}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Phone" Width="250">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding PhoneNumber}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
     </StackPanel>
 </UserControl>

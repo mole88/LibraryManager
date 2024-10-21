@@ -7,22 +7,42 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <DataGrid AutoGenerateColumns="False" 
-          ItemsSource="{Binding Authors}" 
-          Style="{StaticResource MinimalistDataGrid}" 
-          HeadersVisibility="All" 
-          GridLinesVisibility="None"
-          CanUserAddRows="False" 
-          CanUserResizeRows="False"
-          CanUserResizeColumns="False" 
-          CanUserSortColumns="False">
+        <Border CornerRadius="10"
+        Padding="4">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 2">
+                    <GradientStop Color="#ff6600" Offset="0.1"/>
+                    <GradientStop Color="#ff3300" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <ListView ItemsSource="{Binding Authors}"
+                      SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                      Height="400"
+                      Style="{StaticResource ListViewStyle}"
+                      ItemContainerStyle="{StaticResource ListViewItemStyle}">  
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Fullname" Binding="{Binding FullName}"/>
-            </DataGrid.Columns>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False"
+                      ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
 
-        </DataGrid>
+                        <GridViewColumn Header="Id" Width="40">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
+                        <GridViewColumn Header="Name" Width="630">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FullName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
     </StackPanel>
 </UserControl>

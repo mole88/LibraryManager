@@ -7,26 +7,75 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <DataGrid AutoGenerateColumns="False" 
-          ItemsSource="{Binding Transactions}" 
-          Style="{StaticResource MinimalistDataGrid}" 
-          HeadersVisibility="All" 
-          GridLinesVisibility="None"
-          CanUserAddRows="False" 
-          CanUserResizeRows="False"
-          CanUserResizeColumns="False" 
-          CanUserSortColumns="False">
+        <Border CornerRadius="10"
+                Padding="4">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 2">
+                    <GradientStop Color="#ff6600" Offset="0.1"/>
+                    <GradientStop Color="#ff3300" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <ListView ItemsSource="{Binding Transactions}"
+                      SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                      Height="400"
+                      Style="{StaticResource ListViewStyle}"
+                      ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                      FontSize="14">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Visitor" Binding="{Binding Visitor.FullName}"/>
-                <DataGridTextColumn Header="Book" Binding="{Binding Book.Name}"/>
-                <DataGridTextColumn Header="Taken date" Binding="{Binding DateTaken}"/>
-                <DataGridTextColumn Header="Due date" Binding="{Binding DueDate}"/>
-                <DataGridTextColumn Header="Return date" Binding="{Binding ReturnDate}"/>
-            </DataGrid.Columns>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False"
+                                ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
 
-        </DataGrid>
+                        <GridViewColumn Header="Id" Width="20">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
+                        <GridViewColumn Header="Visitor" Width="202">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Visitor.FullName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Book" Width="202">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Book.Name}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Date taken" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DateTaken, StringFormat=\{0:dd.MM.yyyy\}}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Due date" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DueDate, StringFormat=\{0:dd.MM.yyyy\}}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Return date" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ReturnDate, StringFormat=\{0:dd.MM.yyyy\}}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
     </StackPanel>
 </UserControl>
