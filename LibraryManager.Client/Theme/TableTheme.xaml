@@ -11,8 +11,7 @@
         <Setter Property="Foreground" Value="White"/>
 
     </Style>
-    
-    <!-- Стиль для заголовков колонок GridView -->
+
     <Style TargetType="GridViewColumnHeader"
            x:Key="GridViewColumnHeaderStyle">
         <Setter Property="Background" Value="Transparent" />
@@ -30,31 +29,50 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Стиль для элементов списка ListView -->
     <Style TargetType="ListViewItem"
            x:Key="ListViewItemStyle">
-
         <Setter Property="BorderThickness" Value="0"/>
-
-        <Setter Property="ContextMenu">
-            <Setter.Value>
-                <ContextMenu>
-                    <MenuItem Header="Edit" Command="{Binding DataContext.Option1Command, RelativeSource={RelativeSource AncestorType=ListView}}" />
-                    <MenuItem Header="Delete" Command="{Binding DataContext.Option2Command, RelativeSource={RelativeSource AncestorType=ListView}}" />
-                </ContextMenu>
-            </Setter.Value>
-        </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#ff751a" />
-                <Setter Property="Foreground" Value="White" />
-                
+                <Setter Property="Background" Value="{DynamicResource ListViewItemMouseOverBackground}" />
+                <Setter Property="Foreground" Value="{DynamicResource ListViewItemMouseOverForeground}" />
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="#e65c00" />
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource ListViewItemSelectedBackground}" />
+                <Setter Property="Foreground" Value="{DynamicResource ListViewItemSelectedForeground}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style TargetType="ContextMenu"
+           x:Key="ContextMenuStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContextMenu">
+                    <Grid>
+                        <!-- Тень с тем же радиусом скругления -->
+                        <Border Background="Transparent"
+                                CornerRadius="10">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black"
+                                                  BlurRadius="10"
+                                                  ShadowDepth="1" 
+                                                  Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <!-- Основное меню с контентом -->
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="10" 
+                                Padding="2"
+                                Name="Border">
+                            <StackPanel IsItemsHost="True" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

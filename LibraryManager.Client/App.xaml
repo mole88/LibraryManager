@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TextBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TableTheme.xaml"/>
+                <ResourceDictionary Source="Theme/OperationButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/CloseMinimizeButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:BooksPageViewModel}">

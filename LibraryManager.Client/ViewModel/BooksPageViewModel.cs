@@ -2,8 +2,6 @@
 using LibraryManager.Client.Core;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System;
-using System.Windows.Controls;
 
 
 namespace LibraryManager.Client.ViewModel
@@ -15,30 +13,57 @@ namespace LibraryManager.Client.ViewModel
         //TODO: Нормально реализовать связь
         public ReadOnlyObservableCollection<Book> Books => _manager.Books;
 
-       /* private Book _selectedBood;
+        private Book _selectedBook;
 
         public Book SelectedBook
         {
-            get { return _selectedBood; }
-            set 
+            get { return _selectedBook; }
+            set
             {
-                _selectedBood = value; 
+                _selectedBook = value;
                 OnPropertyChanged(nameof(SelectedBook));
             }
-        }*/
+        }
 
         public BooksPageViewModel()
         {
             _manager = ManagerInstance.Instance;
-            /*RowSelectedCommand = new RelayCommand((o) =>
+
+            EditCommand = new RelayCommand((o) =>
             {
-                if (o is Book book)
+                if (SelectedBook != null)
                 {
-                    SelectedBook = book;
+                    MessageBox.Show($"Edit: {SelectedBook.Name}");
                 }
-                MessageBox.Show($"{SelectedBook.Name}");
-            });*/
+            });
+
+            DeleteCommand = new RelayCommand((o) =>
+            {
+                if (SelectedBook != null)
+                {
+                    MessageBox.Show($"Delete: {SelectedBook.Name}");
+                }
+            });
+
+            AddCommand = new RelayCommand((o) =>
+            {
+                MessageBox.Show($"Add");
+            });
+
+            FindCommand = new RelayCommand((o) =>
+            {
+                MessageBox.Show($"Find");
+            });
+
+            SortCommand = new RelayCommand((o) =>
+            {
+                MessageBox.Show($"Sort");
+            });
         }
-        /*public RelayCommand RowSelectedCommand  { get; set;}*/
+        public RelayCommand EditCommand { get; set; }
+        public RelayCommand DeleteCommand { get; set; }
+        public RelayCommand AddCommand { get; set; }
+        public RelayCommand FindCommand { get; set; }
+        public RelayCommand SortCommand { get; set; }
     }
 }

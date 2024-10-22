@@ -24,7 +24,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="8*"/>
+                <RowDefinition Height="12*"/>
             </Grid.RowDefinitions>
 
             <TextBlock Text="LibManage"
@@ -66,18 +66,31 @@
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding TransactionsViewCommand}"/> 
+                             Command="{Binding TransactionsViewCommand}"/>
 
             </StackPanel>
-            <TextBox Grid.Column="1"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Width="250" Height="40"
-                     Margin="5"
-                     Style="{StaticResource TextBoxTheme}"/>
 
             <ContentControl Grid.Row="1" Grid.Column="1"
                             Margin="10" Content="{Binding CurrentView}"/>
+
+            <StackPanel Grid.Row="0" Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 0, 10, 0">
+
+                <Button Width="30" 
+                        Height="30" 
+                        Click="Minimize_Click"
+                        Style="{StaticResource MinimizeButtonStyle}"
+                        Tag="..\Images\minimize32.png"/>
+
+                <Button Width="30" 
+                        Height="30" 
+                        Click="Close_Click"
+                        Style="{StaticResource CloseButtonStyle}"
+                        Tag="..\Images\cross32.png"/>
+            </StackPanel>
         </Grid>
     </Border>
 </Window>
