@@ -68,6 +68,16 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding TransactionsViewCommand}"/>
 
+                <Line X1="0" Y1="0" X2="250"
+                      StrokeThickness="2" Stroke="White"/>
+                <RadioButton Content="Statistics"
+                             Tag="../Images/stat32.png"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding StatisticsViewCommand}"/>
+
             </StackPanel>
 
             <ContentControl Grid.Row="1" Grid.Column="1"

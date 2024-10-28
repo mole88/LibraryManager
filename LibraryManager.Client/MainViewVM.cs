@@ -1,20 +1,29 @@
 ﻿using LibraryManager.Model;
 using LibraryManager.Client.ViewModel;
 using LibraryManager.Client.Core;
+using System.Windows;
 
 namespace LibraryManager.Client
 {
-    public class MainViewVM : ObservsbleObject
+    public class MainViewVM : ObservableObject
     {
         private Manager _manager;
         public MainViewVM() 
         {
-            _manager = ManagerInstance.Instance;
-
+            try
+            {
+                _manager = ManagerInstance.Instance;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
             BooksVM = new BooksPageViewModel();
             VisitorsVM = new VisitorsPageViewModel();
             AuthorsVM = new AuthorsPageViewModel();
             TransactionsVM = new TransactionsPageViewModel();
+            StatisticsVM = new StatisticsPageViewModel();
 
             CurrentView = BooksVM;
 
@@ -38,18 +47,25 @@ namespace LibraryManager.Client
             {
                 CurrentView = TransactionsVM;
             });
+
+            StatisticsViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = StatisticsVM;
+            });
         }
 
         public BooksPageViewModel BooksVM {get; set; }
         public VisitorsPageViewModel VisitorsVM {get; set; }
         public AuthorsPageViewModel AuthorsVM {get; set; }
         public TransactionsPageViewModel TransactionsVM {get; set; }
+        public StatisticsPageViewModel StatisticsVM {get; set; }
 
 
         public RelayCommand BooksViewCommand { get; set; }
         public RelayCommand VisitorsViewCommand { get; set; }
         public RelayCommand AuthorsViewCommand { get; set; }
         public RelayCommand TransactionsViewCommand { get; set; }
+        public RelayCommand StatisticsViewCommand { get; set; }
 
         private object _currentView;
         public object CurrentView

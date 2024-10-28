@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace LibraryManager.Client.ViewModel
 {
-    public class TransactionsPageViewModel : ObservsbleObject
+    public class TransactionsPageViewModel : ObservableObject
     {
         private Manager _manager;
 

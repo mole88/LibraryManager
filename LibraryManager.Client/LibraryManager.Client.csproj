@@ -9,25 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\add32.png" />
-    <None Remove="Images\author32.png" />
-    <None Remove="Images\book32.png" />
-    <None Remove="Images\close32.png" />
-    <None Remove="Images\cross32.png" />
-    <None Remove="Images\delete32.png" />
-    <None Remove="Images\edit32.png" />
-    <None Remove="Images\minimize32.png" />
-    <None Remove="Images\search32.png" />
-    <None Remove="Images\sort32.png" />
-    <None Remove="Images\transactions32.png" />
-    <None Remove="Images\user32.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\close32.png" />
+	<Resource Include="Images\add32.png" />
+    <Resource Include="Images\author32.png" />
+    <Resource Include="Images\book32.png" />
     <Resource Include="Images\cross32.png" />
-    <Resource Include="Images\minimize32.png" />
+    <Resource Include="Images\delete32.png" />
+    <Resource Include="Images\edit32.png" />
+    <Resource Include="Images\stat32.png" />
+    <Resource Include="Images\transactions32.png" />
+    <Resource Include="Images\user32.png" />
+    <Resource Include="Images\search32.png" />
     <Resource Include="Images\sort32.png" />
+    <Resource Include="Images\minimize32.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,17 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraryManager.Model\LibraryManager.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\add32.png" />
-    <Resource Include="Images\author32.png" />
-    <Resource Include="Images\book32.png" />
-    <Resource Include="Images\delete32.png" />
-    <Resource Include="Images\edit32.png" />
-    <Resource Include="Images\search32.png" />
-    <Resource Include="Images\transactions32.png" />
-    <Resource Include="Images\user32.png" />
   </ItemGroup>
 
 </Project>

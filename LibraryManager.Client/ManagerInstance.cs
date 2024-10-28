@@ -1,9 +1,4 @@
 ﻿using LibraryManager.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryManager.Client
 {
@@ -17,7 +12,14 @@ namespace LibraryManager.Client
             {
                 if (_instance == null)
                 {
-                    _instance = new Manager();
+                    try
+                    {
+                        _instance = new Manager();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Ошибка при создании экземпляра класса Manager: " + ex.Message);
+                    }
                 }
                 return _instance;
             }

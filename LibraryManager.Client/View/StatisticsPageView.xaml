@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="LibraryManager.Client.View.StatisticsPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LibraryManager.Client.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="700">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="Month statistics:"
+                       Foreground="White"
+                       FontSize="28"
+                       Margin="0, 0, 0, 10"/>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="Margin" Value="0, 0, 10, 0"/>
+                    </Style>
+
+                </StackPanel.Resources>
+                <Border Background="#844eff"
+                        Height="150"
+                        Width="150"
+                        CornerRadius="10">
+                    <TextBlock Foreground="White"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center">  
+                        <Run Text="New books" FontSize="16"/>
+                        <LineBreak/>
+                        <Run Text="52" FontSize="46" />
+                    </TextBlock>
+                </Border>
+
+                <Border Background="#4e99ff"
+                        Height="150"
+                        Width="150"
+                        CornerRadius="10">
+                    <TextBlock Foreground="White"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center">
+                        <Run Text="New visitors" FontSize="16"/>
+                        <LineBreak/>
+                        <Run Text="52" FontSize="46" />
+                    </TextBlock>
+                </Border>
+
+
+                <Border Background="#00e658"
+                        Height="150"
+                        Width="150"
+                        CornerRadius="10">
+                    <TextBlock Foreground="White"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center">
+                        <Run Text="New authors" FontSize="16"/>
+                        <LineBreak/>
+                        <Run Text="52" FontSize="46" />
+                    </TextBlock>
+                </Border>
+
+                <Border Background="Blue"
+                        Height="150"
+                        Width="150"
+                        CornerRadius="10">
+                    <TextBlock Foreground="White"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center">
+                        <Run Text="New transactions" FontSize="16"/>
+                        <LineBreak/>
+                        <Run Text="52" FontSize="46" />
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

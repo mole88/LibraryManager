@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using LibraryManager.Model.Exceptions;
 
 namespace LibraryManager.Model
 {
@@ -16,18 +17,25 @@ namespace LibraryManager.Model
 
         public Manager()
         {
-            using (LibraryDbContext db = new LibraryDbContext())
+            try
             {
-                _books = new ObservableCollection<Book>(db.Books);
-                _authors = new ObservableCollection<Author>(db.Authors);
-                _visitors = new ObservableCollection<Visitor>(db.Visitors);
-                _transactions = new ObservableCollection<LibraryTransaction>(db.Tranactions);
-            }
+                using (LibraryDbContext db = new LibraryDbContext())
+                {
+                    _books = new ObservableCollection<Book>(db.Books);
+                    _authors = new ObservableCollection<Author>(db.Authors);
+                    _visitors = new ObservableCollection<Visitor>(db.Visitors);
+                    _transactions = new ObservableCollection<LibraryTransaction>(db.Tranactions);
+                }
 
-            Transactions = new ReadOnlyObservableCollection<LibraryTransaction>(_transactions);
-            Visitors = new ReadOnlyObservableCollection<Visitor>(_visitors);
-            Books = new ReadOnlyObservableCollection<Book>(_books);
-            Authors = new ReadOnlyObservableCollection<Author>(_authors);
+                Transactions = new ReadOnlyObservableCollection<LibraryTransaction>(_transactions);
+                Visitors = new ReadOnlyObservableCollection<Visitor>(_visitors);
+                Books = new ReadOnlyObservableCollection<Book>(_books);
+                Authors = new ReadOnlyObservableCollection<Author>(_authors);
+            }
+            catch
+            {
+                throw new DbConnectionException("Ошибка подключения к базе данных.");
+            }
         }
         public void AddVisitor(Visitor visitor)
         {

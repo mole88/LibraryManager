@@ -30,6 +30,10 @@
             <DataTemplate DataType="{x:Type viewModel:TransactionsPageViewModel}">
                 <view:TransactionsPageView/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:StatisticsPageViewModel}">
+                <view:StatisticsPageView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
