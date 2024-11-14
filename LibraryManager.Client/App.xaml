@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:LibraryManager.Client"
              xmlns:viewModel="clr-namespace:LibraryManager.Client.ViewModel"
              xmlns:view="clr-namespace:LibraryManager.Client.View"
-             StartupUri="MainWindow.xaml">
+             StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Theme/TableTheme.xaml"/>
                 <ResourceDictionary Source="Theme/OperationButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/CloseMinimizeButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/ComboBoxTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:BooksPageViewModel}">
@@ -33,6 +34,10 @@
 
             <DataTemplate DataType="{x:Type viewModel:StatisticsPageViewModel}">
                 <view:StatisticsPageView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AddBookDialogViewModel}">
+                <view:AddBookDialogView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

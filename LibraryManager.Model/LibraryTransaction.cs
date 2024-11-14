@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Model
 {
-    public class LibraryTransaction
+    public class LibraryTransaction : IIdentifiable
     {
         public int Id { get; set; }
         public int VisitorId { get; set; }

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Other\DBConnectionInfo.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<Resource Include="Images\add32.png" />
     <Resource Include="Images\author32.png" />
     <Resource Include="Images\book32.png" />
@@ -21,9 +25,14 @@
     <Resource Include="Images\search32.png" />
     <Resource Include="Images\sort32.png" />
     <Resource Include="Images\minimize32.png" />
+    <EmbeddedResource Include="Other\DBConnectionInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ReportViewer.Common" Version="10.0.40219.1" />
+    <PackageReference Include="Microsoft.ReportViewer.WinForms" Version="10.0.40219.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
   </ItemGroup>
 

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using LibraryManager.Client.Core;
 using System.Windows;
+using LibraryManager.Client.SupportClasses;
 
 namespace LibraryManager.Client.ViewModel
 {

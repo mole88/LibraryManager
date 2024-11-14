@@ -4,13 +4,18 @@ namespace LibraryManager.Model
 {
     public class LibraryDbContext : DbContext
     {
+        private string DBConnectionString;
         public DbSet<Visitor> Visitors { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<LibraryTransaction> Tranactions { get; set; }
+        public LibraryDbContext(string connectionString)
+        {
+            DBConnectionString = connectionString;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=0000");
+            optionsBuilder.UseNpgsql(DBConnectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Model
 {
-    public class Book
+    public class Book : IIdentifiable
     {
         public int Id { get; set; }
         public string Name { get; set; }

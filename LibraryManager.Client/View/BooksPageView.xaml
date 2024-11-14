@@ -13,110 +13,112 @@
         <SolidColorBrush x:Key="ListViewItemSelectedForeground">White</SolidColorBrush>
 
     </UserControl.Resources>
-    <StackPanel>
-        <Border CornerRadius="10"
-                Padding="4">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0, 0" EndPoint="0.3, 2">
-                    <GradientStop Color="#3366ff" Offset="0.1"/>
-                    <GradientStop Color="#ff3300" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
-            <ListView ItemsSource="{Binding Books}"
-                      SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
-                      Height="400"
-                      Style="{StaticResource ListViewStyle}"
-                      ItemContainerStyle="{StaticResource ListViewItemStyle}">
-                
-                <ListView.ContextMenu>
-                    <ContextMenu Style="{StaticResource ContextMenuStyle}"
-                                 Background="#272537"
-                                 Foreground="White">
-                        <MenuItem Header="Edit" Command="{Binding EditCommand}">
-                            <MenuItem.Icon>
-                                <Image Source="../Images/edit32.png"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="Delete" Command="{Binding DeleteCommand}">
-                            <MenuItem.Icon>
-                                <Image Source="../Images/delete32.png"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                </ListView.ContextMenu>
-                
-                <ListView.View>
-                    <GridView AllowsColumnReorder="False"
-                              ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+    <Grid>
+        <StackPanel>
+            <Border CornerRadius="10"
+                    Padding="4">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0, 0" EndPoint="0.3, 2">
+                        <GradientStop Color="#3366ff" Offset="0.1"/>
+                        <GradientStop Color="#ff3300" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <ListView ItemsSource="{Binding Books}"
+                          SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
+                          Height="400"
+                          Style="{StaticResource ListViewStyle}"
+                          ItemContainerStyle="{StaticResource ListViewItemStyle}">
 
-                        <GridViewColumn Header="Id" Width="40">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Id}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                    <ListView.ContextMenu>
+                        <ContextMenu Style="{StaticResource ContextMenuStyle}"
+                                     Background="#272537"
+                                     Foreground="White">
+                            <MenuItem Header="Edit" Command="{Binding EditCommand}">
+                                <MenuItem.Icon>
+                                    <Image Source="../Images/edit32.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete" Command="{Binding DeleteCommand}">
+                                <MenuItem.Icon>
+                                    <Image Source="../Images/delete32.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
 
-                        <GridViewColumn Header="Name" Width="290">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False"
+                                  ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
 
-                        <GridViewColumn Header="Author" Width="250">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding BookAuthor.FullName}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                            <GridViewColumn Header="Id" Width="40">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Id}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <GridViewColumn Header="Year" Width="90">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Year}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Border>
+                            <GridViewColumn Header="Name" Width="290">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            
-            <Button Style="{StaticResource OperationButtonTheme}"
-                    Command="{Binding AddCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/add32.png"
-                           Margin="0, 0, 4, 0"
-                           Height="20"/>        
-                    <TextBlock Text="Add"/>
-                </StackPanel>
-            </Button>
+                            <GridViewColumn Header="Author" Width="250">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding BookAuthor.FullName}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-            <Button Style="{StaticResource OperationButtonTheme}"
-                    Command="{Binding SortCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/sort32.png"
-                           Margin="0, 0, 4, 0"
-                           Height="20"/>    
-                    <TextBlock Text="Sort"/>
-                </StackPanel>
-            </Button>
+                            <GridViewColumn Header="Year" Width="90">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Year}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
 
-            <Button Style="{StaticResource OperationButtonTheme}"
-                    Command="{Binding FindCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/search32.png"
-                           Margin="0, 0, 4, 0"
-                           Height="20"/>
-                    <TextBlock Text="Find"/>
-                </StackPanel>
-            </Button>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+
+                <Button Style="{StaticResource OperationButtonTheme}"
+                        Command="{Binding AddCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Images/add32.png"
+                               Margin="0, 0, 4, 0"
+                               Height="20"/>
+                        <TextBlock Text="Add"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource OperationButtonTheme}"
+                        Command="{Binding SortCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Images/sort32.png"
+                               Margin="0, 0, 4, 0"
+                               Height="20"/>
+                        <TextBlock Text="Sort"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource OperationButtonTheme}"
+                        Command="{Binding FindCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Images/search32.png"
+                               Margin="0, 0, 4, 0"
+                               Height="20"/>
+                        <TextBlock Text="Find"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </UserControl>

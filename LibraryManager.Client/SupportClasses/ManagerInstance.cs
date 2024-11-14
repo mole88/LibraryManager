@@ -1,11 +1,11 @@
 ﻿using LibraryManager.Model;
 
-namespace LibraryManager.Client
+namespace LibraryManager.Client.SupportClasses
 {
-    
+
     static class ManagerInstance
     {
-        private static Manager? _instance {  get; set; }
+        private static Manager? _instance { get; set; }
         public static Manager Instance
         {
             get

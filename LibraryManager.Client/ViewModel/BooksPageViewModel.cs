@@ -2,6 +2,7 @@
 using LibraryManager.Client.Core;
 using System.Collections.ObjectModel;
 using System.Windows;
+using LibraryManager.Client.SupportClasses;
 
 
 namespace LibraryManager.Client.ViewModel
@@ -29,6 +30,7 @@ namespace LibraryManager.Client.ViewModel
         {
             _manager = ManagerInstance.Instance;
 
+
             EditCommand = new RelayCommand((o) =>
             {
                 if (SelectedBook != null)
@@ -45,11 +47,6 @@ namespace LibraryManager.Client.ViewModel
                 }
             });
 
-            AddCommand = new RelayCommand((o) =>
-            {
-                MessageBox.Show($"Add");
-            });
-
             FindCommand = new RelayCommand((o) =>
             {
                 MessageBox.Show($"Find");
@@ -59,11 +56,23 @@ namespace LibraryManager.Client.ViewModel
             {
                 MessageBox.Show($"Sort");
             });
+
+            AddCommand = new RelayCommand((o) =>
+            {
+                RequestAdd();
+            });
         }
         public RelayCommand EditCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand AddCommand { get; set; }
         public RelayCommand FindCommand { get; set; }
         public RelayCommand SortCommand { get; set; }
+
+
+        public event EventHandler AddEvent;
+        private void RequestAdd()
+        {
+            AddEvent?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

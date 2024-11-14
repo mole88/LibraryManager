@@ -12,20 +12,21 @@
                         <Grid>
                             <Rectangle StrokeThickness="1"/>
                             <TextBox Margin="1"
-                                     Text="{TemplateBinding Text}"
+                                     Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      BorderThickness="0"
                                      Background="Transparent"
                                      VerticalAlignment="Center"
                                      Padding="5"
                                      Foreground="#CFCFCF"
-                                     x:Name="SearchBox"/>
+                                     x:Name="SearchBox"
+                                     CaretBrush="#CFCFCF"/>
 
                             <TextBlock IsHitTestVisible="False"
-                                       Text="Search"
+                                       Text="{TemplateBinding Tag}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
                                        Margin="10,0,0,0"
-                                       FontSize="11"
+                                       FontSize="13"
                                        Foreground="DarkGray"
                                        Grid.Column="1">
 
@@ -47,6 +48,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+        <Setter Property="FontSize" Value="13"/>
     </Style>
 </ResourceDictionary>

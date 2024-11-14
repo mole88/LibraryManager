@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Security.Principal;
 using LibraryManager.Model.Exceptions;
 
 namespace LibraryManager.Model
@@ -15,26 +16,28 @@ namespace LibraryManager.Model
         public readonly ReadOnlyObservableCollection<Book> Books;
         public readonly ReadOnlyObservableCollection<Author> Authors;
 
+        private readonly LibraryDbContext _dbContext;
+        private readonly string dbInfoFilePath = "Other/DBConnectionInfo.xml";
         public Manager()
         {
             try
             {
-                using (LibraryDbContext db = new LibraryDbContext())
-                {
-                    _books = new ObservableCollection<Book>(db.Books);
-                    _authors = new ObservableCollection<Author>(db.Authors);
-                    _visitors = new ObservableCollection<Visitor>(db.Visitors);
-                    _transactions = new ObservableCollection<LibraryTransaction>(db.Tranactions);
-                }
+                string dbConnectionString = ConnectionStringGetter.GetConnectionString(dbInfoFilePath);
+                _dbContext = new LibraryDbContext(dbConnectionString);
+
+                _books = new ObservableCollection<Book>(_dbContext.Books);
+                _authors = new ObservableCollection<Author>(_dbContext.Authors);
+                _visitors = new ObservableCollection<Visitor>(_dbContext.Visitors);
+                _transactions = new ObservableCollection<LibraryTransaction>(_dbContext.Tranactions);
 
                 Transactions = new ReadOnlyObservableCollection<LibraryTransaction>(_transactions);
                 Visitors = new ReadOnlyObservableCollection<Visitor>(_visitors);
                 Books = new ReadOnlyObservableCollection<Book>(_books);
                 Authors = new ReadOnlyObservableCollection<Author>(_authors);
             }
-            catch
+            catch(Exception ex)
             {
-                throw new DbConnectionException("Ошибка подключения к базе данных.");
+                throw new DbConnectionException("Ошибка подключения к базе данных:\n" + ex.Message);
             }
         }
         public void AddVisitor(Visitor visitor)
@@ -43,7 +46,9 @@ namespace LibraryManager.Model
         }
         public void AddBook(Book book)
         {
-            //TODO
+            _books.Add(book);
+            _dbContext.Books.Add(book);
+            _dbContext.SaveChanges();
         }
         public void RemoveVisitor(Visitor visitor)
         {

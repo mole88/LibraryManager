@@ -1,4 +1,5 @@
 ﻿using LibraryManager.Client.Core;
+using LibraryManager.Client.SupportClasses;
 using LibraryManager.Model;
 
 namespace LibraryManager.Client.ViewModel

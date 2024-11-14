@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryManager.Client"
+        xmlns:VM="clr-namespace:LibraryManager.Client.ViewModel"
         mc:Ignorable="d"
         Height="600" Width="920"
         WindowStyle="None"
@@ -12,7 +13,7 @@
         AllowsTransparency="True"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.DataContext>
-        <local:MainViewVM/>
+        <VM:MainViewVM/>
     </Window.DataContext>
     <Border Background="#272537"
             CornerRadius="10">
@@ -21,7 +22,6 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="12*"/>
@@ -34,7 +34,6 @@
                        FontSize="22"/>
 
             <StackPanel Grid.Row="1">
-
                 <RadioButton Content="Books"
                              Tag="..\Images\book32.png"
                              Height="50"
@@ -101,6 +100,23 @@
                         Style="{StaticResource CloseButtonStyle}"
                         Tag="..\Images\cross32.png"/>
             </StackPanel>
+
+            <Rectangle Grid.ColumnSpan="2"
+                       Grid.RowSpan="2"
+                       Fill="Black"
+                       Opacity="0.4"
+                       Visibility= "{Binding DialogVisibility}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch">
+                <Rectangle.InputBindings>
+                    <MouseBinding Command="{Binding CancelDialogCommand}" MouseAction="LeftClick"/>
+                </Rectangle.InputBindings>
+            </Rectangle>
+
+            <ContentControl Grid.ColumnSpan="2"
+                            Grid.RowSpan="2"
+                            Content="{Binding CurrentDialog}"
+                            Visibility="{Binding DialogVisibility}"/>
         </Grid>
     </Border>
 </Window>
