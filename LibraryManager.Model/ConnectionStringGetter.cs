@@ -2,9 +2,9 @@
 
 namespace LibraryManager.Model
 {
-    internal class ConnectionStringGetter
+    public class ConnectionStringGetter
     {
-        internal static string GetConnectionString(string filePath)
+        public static string GetConnectionString(string filePath)
         {
             var doc = XDocument.Load(filePath);
 

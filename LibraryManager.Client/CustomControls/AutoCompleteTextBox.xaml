@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="LibraryManager.Client.CustomControls.AutoCompleteTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
+    <Grid>
+        <TextBox Text="{Binding SearchText, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                 Tag="{Binding Placeholder, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 Name="TextBox"
+                 Style="{StaticResource TextBoxTheme}"/>
+
+        <Popup IsOpen="{Binding IsPopupOpen, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" 
+               PlacementTarget="{Binding ElementName=TextBox}" 
+               StaysOpen="False"
+               Style="{StaticResource PopupTheme}">
+            <ListBox ItemsSource="{Binding FilteredItems, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                     SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
+                     DisplayMemberPath="{Binding DisplayMemberPath, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                     SelectionChanged="ListBox_SelectionChanged"
+                     Style="{StaticResource PopupListBoxStyle}"/>
+        </Popup>
+    </Grid>
+</UserControl>

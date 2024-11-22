@@ -101,17 +101,18 @@
                         Tag="..\Images\cross32.png"/>
             </StackPanel>
 
-            <Rectangle Grid.ColumnSpan="2"
-                       Grid.RowSpan="2"
-                       Fill="Black"
-                       Opacity="0.4"
-                       Visibility= "{Binding DialogVisibility}"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch">
-                <Rectangle.InputBindings>
+            <Border Grid.ColumnSpan="2"
+                    Grid.RowSpan="2"
+                    Background="Black"
+                    Opacity="0.4"
+                    Visibility= "{Binding DialogVisibility}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    CornerRadius="10">
+                <Border.InputBindings>
                     <MouseBinding Command="{Binding CancelDialogCommand}" MouseAction="LeftClick"/>
-                </Rectangle.InputBindings>
-            </Rectangle>
+                </Border.InputBindings>
+            </Border>
 
             <ContentControl Grid.ColumnSpan="2"
                             Grid.RowSpan="2"

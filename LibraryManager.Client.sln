@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryManager.Model", "Lib
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryManager.Client", "LibraryManager.Client\LibraryManager.Client.csproj", "{B7B91A29-FCC7-45E9-A191-349569DF513B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManager.Tests", "Tests\LibraryManager.Tests.csproj", "{2ED42F03-6820-4BBB-A8ED-8539E7EBE745}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1995D37A-9D5B-430C-949E-9C886D0D3D1A} = {1995D37A-9D5B-430C-949E-9C886D0D3D1A}
+		{B7B91A29-FCC7-45E9-A191-349569DF513B} = {B7B91A29-FCC7-45E9-A191-349569DF513B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,10 @@ Global
 		{B7B91A29-FCC7-45E9-A191-349569DF513B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7B91A29-FCC7-45E9-A191-349569DF513B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7B91A29-FCC7-45E9-A191-349569DF513B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ED42F03-6820-4BBB-A8ED-8539E7EBE745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ED42F03-6820-4BBB-A8ED-8539E7EBE745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ED42F03-6820-4BBB-A8ED-8539E7EBE745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ED42F03-6820-4BBB-A8ED-8539E7EBE745}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -52,16 +52,17 @@ namespace LibraryManager.Client.ViewModel
                 CurrentView = StatisticsVM;
             });
 
-            AddBookDialogVM = new AddBookDialogViewModel();
-            BooksVM.AddEvent += (s, e) =>
-            {
-                CurrentDialog = AddBookDialogVM;
-            };
-
             CancelDialogCommand = new RelayCommand(o =>
             {
                 CurrentDialog = null;
             });
+
+            AddBookDialogVM = new AddBookDialogViewModel();
+            BooksVM.AddEvent += (s, e) =>
+            {
+                AddBookDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = AddBookDialogVM;
+            };
         }
 
         public BooksPageViewModel BooksVM { get; set; }

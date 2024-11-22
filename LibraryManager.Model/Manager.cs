@@ -17,7 +17,7 @@ namespace LibraryManager.Model
         public readonly ReadOnlyObservableCollection<Author> Authors;
 
         private readonly LibraryDbContext _dbContext;
-        private readonly string dbInfoFilePath = "Other/DBConnectionInfo.xml";
+        private readonly string dbInfoFilePath = "D:/proj/Visual Studio/LibManage/Other/DBConnectionInfo.xml";
         public Manager()
         {
             try
@@ -46,6 +46,7 @@ namespace LibraryManager.Model
         }
         public void AddBook(Book book)
         {
+            book.Id = UniqueIDMaker.GetUniqueID(_books);
             _books.Add(book);
             _dbContext.Books.Add(book);
             _dbContext.SaveChanges();

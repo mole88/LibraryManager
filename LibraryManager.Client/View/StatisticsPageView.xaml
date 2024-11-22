@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LibraryManager.Client.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="700">
+             d:DesignHeight="500" d:DesignWidth="700">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel>
@@ -126,5 +127,12 @@
                 </Border>
             </StackPanel>
         </StackPanel>
+
+        <Button Grid.Row="2"
+                Style="{StaticResource OperationButtonTheme}"
+                Content="Generate PDF report"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding GenerateReportCommand}"/>
     </Grid>
 </UserControl>
