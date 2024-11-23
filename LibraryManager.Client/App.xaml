@@ -40,6 +40,18 @@
             <DataTemplate DataType="{x:Type viewModel:AddBookDialogViewModel}">
                 <view:AddBookDialogView/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AddVisitorDialogViewModel}">
+                <view:AddVisitorDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AddAuthorDialogViewModel}">
+                <view:AddAuthorDialogView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:AddTransactionDialogViewModel}">
+                <view:AddTransactionDialogView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

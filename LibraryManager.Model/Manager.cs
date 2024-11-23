@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Security.Principal;
 using LibraryManager.Model.Exceptions;
 
 namespace LibraryManager.Model
@@ -42,7 +41,10 @@ namespace LibraryManager.Model
         }
         public void AddVisitor(Visitor visitor)
         {
-            //TODO
+            visitor.Id = UniqueIDMaker.GetUniqueID(_visitors);
+            _visitors.Add(visitor);
+            _dbContext.Visitors.Add(visitor);
+            _dbContext.SaveChanges();
         }
         public void AddBook(Book book)
         {
@@ -51,6 +53,21 @@ namespace LibraryManager.Model
             _dbContext.Books.Add(book);
             _dbContext.SaveChanges();
         }
+        public void AddAuthor(Author author)
+        {
+            author.Id = UniqueIDMaker.GetUniqueID(_authors);
+            _authors.Add(author);
+            _dbContext.Authors.Add(author);
+            _dbContext.SaveChanges();
+        }
+        public void AddTransaction(LibraryTransaction transaction)
+        {
+            transaction.Id = UniqueIDMaker.GetUniqueID(_transactions);
+            _transactions.Add(transaction);
+            _dbContext.Tranactions.Add(transaction);
+            _dbContext.SaveChanges();
+        }
+
         public void RemoveVisitor(Visitor visitor)
         {
             //TODO

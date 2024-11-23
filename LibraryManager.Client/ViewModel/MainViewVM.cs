@@ -10,20 +10,12 @@ namespace LibraryManager.Client.ViewModel
         private Manager _manager;
         public MainViewVM()
         {
-            try
-            {
+            try{
                 _manager = ManagerInstance.Instance;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            BooksVM = new BooksPageViewModel();
-            VisitorsVM = new VisitorsPageViewModel();
-            AuthorsVM = new AuthorsPageViewModel();
-            TransactionsVM = new TransactionsPageViewModel();
-            StatisticsVM = new StatisticsPageViewModel();
 
             CurrentView = BooksVM;
 
@@ -57,19 +49,36 @@ namespace LibraryManager.Client.ViewModel
                 CurrentDialog = null;
             });
 
-            AddBookDialogVM = new AddBookDialogViewModel();
             BooksVM.AddEvent += (s, e) =>
             {
                 AddBookDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = AddBookDialogVM;
             };
+
+            VisitorsVM.AddEvent += (s, e) =>
+            {
+                AddVisitorDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = AddVisitorDialogVM;
+            };
+
+            AuthorsVM.AddEvent += (s, e) =>
+            {
+                AddAuthorDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = AddAuthorDialogVM;
+            };
+
+            TransactionsVM.AddEvent += (s, e) =>
+            {
+                AddTransactionDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = AddTransactionDialogVM;
+            };
         }
 
-        public BooksPageViewModel BooksVM { get; set; }
-        public VisitorsPageViewModel VisitorsVM { get; set; }
-        public AuthorsPageViewModel AuthorsVM { get; set; }
-        public TransactionsPageViewModel TransactionsVM { get; set; }
-        public StatisticsPageViewModel StatisticsVM { get; set; }
+        public BooksPageViewModel BooksVM { get; set; } = new();
+        public VisitorsPageViewModel VisitorsVM { get; set; } = new();
+        public AuthorsPageViewModel AuthorsVM { get; set; } = new();
+        public TransactionsPageViewModel TransactionsVM { get; set; } = new();
+        public StatisticsPageViewModel StatisticsVM { get; set; } = new();
 
         public RelayCommand BooksViewCommand { get; set; }
         public RelayCommand VisitorsViewCommand { get; set; }
@@ -90,7 +99,10 @@ namespace LibraryManager.Client.ViewModel
             }
         }
 
-        public AddBookDialogViewModel AddBookDialogVM { get; set; }
+        public AddBookDialogViewModel AddBookDialogVM { get; set; } = new();
+        public AddVisitorDialogViewModel AddVisitorDialogVM { get; set; } = new();
+        public AddAuthorDialogViewModel AddAuthorDialogVM { get; set; } = new();
+        public AddTransactionDialogViewModel AddTransactionDialogVM { get; set; } = new();
 
         private object _currentDialog = null;
         public object CurrentDialog
@@ -103,7 +115,6 @@ namespace LibraryManager.Client.ViewModel
                 OnPropertyChanged(nameof(DialogVisibility));
             }
         }
-
         public Visibility DialogVisibility
         {
             get { return _currentDialog == null ? Visibility.Collapsed : Visibility.Visible; }

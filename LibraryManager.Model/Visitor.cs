@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Model
 { 
-    public class Visitor
+    public class Visitor : IIdentifiable
     {
         public int Id { get; set; }
         public string? FullName { get; set; }

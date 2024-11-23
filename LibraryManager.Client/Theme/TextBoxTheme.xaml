@@ -12,14 +12,24 @@
                         <Grid>
                             <Rectangle StrokeThickness="1"/>
                             <TextBox Margin="1"
-                                     Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
                                      BorderThickness="0"
                                      Background="Transparent"
                                      VerticalAlignment="Center"
                                      Padding="5"
-                                     Foreground="#CFCFCF"
                                      x:Name="SearchBox"
-                                     CaretBrush="#CFCFCF"/>
+                                     CaretBrush="#CFCFCF">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="0">
+                                                <Setter Property="Foreground" Value="Transparent"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Foreground" Value="#CFCFCF"/>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
 
                             <TextBlock IsHitTestVisible="False"
                                        Text="{TemplateBinding Tag}"
@@ -35,6 +45,10 @@
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                
                                             </DataTrigger>
                                         </Style.Triggers>
                                         <Setter Property="Visibility" Value="Hidden"/>

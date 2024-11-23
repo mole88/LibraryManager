@@ -11,7 +11,6 @@ namespace LibraryManager.Client.ViewModel
     {
         private Manager _manager;
 
-        //TODO: Нормально реализовать связь
         public ReadOnlyObservableCollection<Book> Books => _manager.Books;
 
         private Book _selectedBook;
@@ -59,7 +58,7 @@ namespace LibraryManager.Client.ViewModel
 
             AddCommand = new RelayCommand((o) =>
             {
-                RequestAdd();
+                AddEvent?.Invoke(this, EventArgs.Empty);
             });
         }
         public RelayCommand EditCommand { get; set; }
@@ -68,11 +67,6 @@ namespace LibraryManager.Client.ViewModel
         public RelayCommand FindCommand { get; set; }
         public RelayCommand SortCommand { get; set; }
 
-
         public event EventHandler AddEvent;
-        private void RequestAdd()
-        {
-            AddEvent?.Invoke(this, EventArgs.Empty);
-        }
     }
 }

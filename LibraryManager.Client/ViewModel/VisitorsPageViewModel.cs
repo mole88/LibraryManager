@@ -46,7 +46,7 @@ namespace LibraryManager.Client.ViewModel
 
             AddCommand = new RelayCommand((o) =>
             {
-                MessageBox.Show($"Add");
+                AddEvent?.Invoke(this, EventArgs.Empty);
             });
 
             FindCommand = new RelayCommand((o) =>
@@ -64,5 +64,7 @@ namespace LibraryManager.Client.ViewModel
         public RelayCommand AddCommand { get; set; }
         public RelayCommand FindCommand { get; set; }
         public RelayCommand SortCommand { get; set; }
+
+        public event EventHandler AddEvent;
     }
 }

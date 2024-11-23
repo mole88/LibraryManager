@@ -6,7 +6,7 @@
         <Setter Property="AllowsTransparency" Value="True"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="PopupAnimation" Value="Slide"/>
-        <Setter Property="Width" Value="{Binding PlacementTarget.ActualWidth, RelativeSource={RelativeSource Self}}"/>
+        
     </Style>
     
     <Style TargetType="ListBox" x:Key="PopupListBoxStyle">

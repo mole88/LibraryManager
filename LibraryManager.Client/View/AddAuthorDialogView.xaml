@@ -1,48 +1,34 @@
-﻿<UserControl x:Class="LibraryManager.Client.View.AddBookDialogView"
+﻿<UserControl x:Class="LibraryManager.Client.View.AddAuthorDialogView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LibraryManager.Client.View"
-             xmlns:controls="clr-namespace:LibraryManager.Client.CustomControls"
-             xmlns:viewmodel="clr-namespace:LibraryManager.Client.ViewModel"
-             d:DataContext="{d:DesignInstance Type=viewmodel:AddBookDialogViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Border Background="#272537"
                 CornerRadius="10"
-                Height="250"
+                Height="140"
                 Width="250">
             <StackPanel>
-                <TextBlock Text="New Book"
+                <TextBlock Text="New Author"
                            Foreground="White"
                            FontSize="20"
                            HorizontalAlignment="Center"
                            Margin="0, 4, 0, 10"/>
 
-                <TextBox Tag="Name"
+                <TextBox Tag="Fullname"
                          Style="{StaticResource ResourceKey=TextBoxTheme}"
                          Margin="5"
-                         Text="{Binding BookName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <controls:AutoCompleteTextBox ItemsSource="{Binding AuthorsNames}"
-                                              SearchText="{Binding SearchAuthorText , Mode=TwoWay}" 
-                                              Placeholder="Author"
-                                              Margin="5"/>
-
-
-                <TextBox Tag="Year"
-                         Style="{StaticResource ResourceKey=TextBoxTheme}"
-                         Margin="5"
-                         Text="{Binding BookYear, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding AuthorName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
 
                 <Button Style="{StaticResource CommonButtonTheme}"
                         Content="Add"
                         FontSize="16"
                         Margin="4"
-                        Command="{Binding AddBookCommand}"
+                        Command="{Binding AddAuthorCommand}"
                         HorizontalAlignment="Center"/>
             </StackPanel>
         </Border>

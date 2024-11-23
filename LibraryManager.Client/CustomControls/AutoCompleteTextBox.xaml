@@ -12,8 +12,10 @@
 
         <Popup IsOpen="{Binding IsPopupOpen, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" 
                PlacementTarget="{Binding ElementName=TextBox}" 
+               HorizontalOffset="-20"
                StaysOpen="False"
-               Style="{StaticResource PopupTheme}">
+               Style="{StaticResource PopupTheme}"
+               Width="200">
             <ListBox ItemsSource="{Binding FilteredItems, RelativeSource={RelativeSource AncestorType=UserControl}}" 
                      SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
                      DisplayMemberPath="{Binding DisplayMemberPath, RelativeSource={RelativeSource AncestorType=UserControl}}"
