@@ -1,19 +1,15 @@
 ﻿using LibraryManager.Client.Core;
 using LibraryManager.Client.SupportClasses;
 using LibraryManager.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryManager.Client.ViewModel
 {
     public class AddTransactionDialogViewModel : ObservableObject
     {
         private Manager _manager;
-        public ObservableCollection<string> AuthorsNames => new(_manager.Authors.Select(a => a.FullName));
+        public ObservableCollection<string> BooksNames => new(_manager.Books.Select(b => b.Name));
+        public ObservableCollection<string> VisitorsNames => new(_manager.Visitors.Select(v => v.FullName));
         public AddTransactionDialogViewModel()
         {
             _manager = ManagerInstance.Instance;
@@ -22,21 +18,22 @@ namespace LibraryManager.Client.ViewModel
                 Book book = GetBook(SearchBookText);
                 Visitor visitor = GetVisitor(SearchVisitorText);
 
-                /*if (bookAuthor != null && !string.IsNullOrEmpty(BookName) && BookYear != 0)
+                if (book != null && visitor != null && SelectedDueDate != new DateTime())
                 {
-                    Book newBook = new()
+                    LibraryTransaction trans = new()
                     {
-                        Id = UniqueIDMaker.GetUniqueID(_manager.Books),
-                        Name = BookName,
-                        BookAuthor = bookAuthor,
-                        AuthorId = bookAuthor.Id,
-                        Year = BookYear,
-                        IsAvailable = true
+                        Id = UniqueIDMaker.GetUniqueID(_manager.Transactions),
+                        Book = book,
+                        BookId = book.Id,
+                        Visitor = visitor,
+                        VisitorId = visitor.Id,
+                        DateTaken = DateTime.Now,
+                        DueDate = SelectedDueDate
                     };
-                    _manager.AddBook(newBook);
+                    _manager.AddTransaction(trans);
                     ClearDialog();
                     CancelCommand.Execute(o);
-                }*/
+                }
             });
         }
 
@@ -67,6 +64,8 @@ namespace LibraryManager.Client.ViewModel
                 }
             }
         }
+        public DateTime SelectedDueDate { get; set; } = DateTime.Now;
+
         public RelayCommand AddTransactionCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
         private Book? GetBook(string name)
@@ -81,6 +80,7 @@ namespace LibraryManager.Client.ViewModel
         {
             SearchBookText = "";
             SearchVisitorText = "";
+            SelectedDueDate = DateTime.Now;
         }
     }
 }

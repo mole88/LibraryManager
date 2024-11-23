@@ -17,9 +17,10 @@ namespace LibraryManager.Client.ViewModel
                 {
                     Visitor newVisitor = new Visitor()
                     {
+                        Id = UniqueIDMaker.GetUniqueID(_manager.Visitors),
                         FullName = VisitorName,
                         Age = VisitorAge,
-                        PhoneNumber = VisitorPhone
+                        PhoneNumber = VisitorPhone,
                     };
                     _manager.AddVisitor(newVisitor);
                     ClearDialog();

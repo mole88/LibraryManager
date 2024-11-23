@@ -37,7 +37,7 @@ namespace LibraryManager.Client.ViewModel
             {
                 if (SelectedAuthor != null)
                 {
-                    MessageBox.Show($"Delete: {SelectedAuthor.FullName}");
+                    _manager.RemoveAuthor(SelectedAuthor);
                 }
             });
 

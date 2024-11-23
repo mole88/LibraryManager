@@ -40,7 +40,7 @@ namespace LibraryManager.Client.ViewModel
             {
                 if (SelectedTransaction != null)
                 {
-                    MessageBox.Show($"Delete: {SelectedTransaction.Book.Name}");
+                    _manager.RemoveTransaction(SelectedTransaction);
                 }
             });
 

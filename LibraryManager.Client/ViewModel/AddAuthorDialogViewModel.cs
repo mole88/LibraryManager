@@ -22,6 +22,7 @@ namespace LibraryManager.Client.ViewModel
                 {
                     Author newAuthor = new Author()
                     {
+                        Id = UniqueIDMaker.GetUniqueID(_manager.Authors),
                         FullName = AuthorName,
                     };
                     _manager.AddAuthor(newAuthor);

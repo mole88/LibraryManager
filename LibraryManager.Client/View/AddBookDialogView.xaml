@@ -27,7 +27,7 @@
                          Text="{Binding BookName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <controls:AutoCompleteTextBox ItemsSource="{Binding AuthorsNames}"
-                                              SearchText="{Binding SearchAuthorText , Mode=TwoWay}" 
+                                              SearchText="{Binding SearchAuthorText, Mode=TwoWay}" 
                                               Placeholder="Author"
                                               Margin="5"/>
 

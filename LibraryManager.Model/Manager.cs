@@ -41,28 +41,24 @@ namespace LibraryManager.Model
         }
         public void AddVisitor(Visitor visitor)
         {
-            visitor.Id = UniqueIDMaker.GetUniqueID(_visitors);
             _visitors.Add(visitor);
             _dbContext.Visitors.Add(visitor);
             _dbContext.SaveChanges();
         }
         public void AddBook(Book book)
         {
-            book.Id = UniqueIDMaker.GetUniqueID(_books);
             _books.Add(book);
             _dbContext.Books.Add(book);
             _dbContext.SaveChanges();
         }
         public void AddAuthor(Author author)
         {
-            author.Id = UniqueIDMaker.GetUniqueID(_authors);
             _authors.Add(author);
             _dbContext.Authors.Add(author);
             _dbContext.SaveChanges();
         }
         public void AddTransaction(LibraryTransaction transaction)
         {
-            transaction.Id = UniqueIDMaker.GetUniqueID(_transactions);
             _transactions.Add(transaction);
             _dbContext.Tranactions.Add(transaction);
             _dbContext.SaveChanges();
@@ -70,12 +66,29 @@ namespace LibraryManager.Model
 
         public void RemoveVisitor(Visitor visitor)
         {
-            //TODO
+            _visitors.Remove(visitor);
+            _dbContext.Visitors.Remove(visitor);
+            _dbContext.SaveChanges();
         }
         public void RemoveBook(Book book)
         {
-            //TODO
+            _books.Remove(book);
+            _dbContext.Books.Remove(book);
+            _dbContext.SaveChanges();
         }
+        public void RemoveAuthor(Author author)
+        {
+            _authors.Remove(author);
+            _dbContext.Authors.Remove(author);
+            _dbContext.SaveChanges();
+        }
+        public void RemoveTransaction(LibraryTransaction transaction)
+        {
+            _transactions.Remove(transaction);
+            _dbContext.Tranactions.Remove(transaction);
+            _dbContext.SaveChanges();
+        }
+
         public void FindBook(int id)
         {
             //TODO

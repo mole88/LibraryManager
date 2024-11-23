@@ -20,17 +20,22 @@
                            Margin="0, 4, 0, 10"/>
                 
                 <controls:AutoCompleteTextBox ItemsSource="{Binding VisitorsNames}"
-                                              SearchText="{Binding SearchVisitorText}" 
+                                              SearchText="{Binding SearchVisitorText, Mode=TwoWay}" 
                                               Placeholder="Visitor"
                                               Margin="5"/>
 
                 <controls:AutoCompleteTextBox ItemsSource="{Binding BooksNames}"
-                                              SearchText="{Binding SearchBookText}" 
+                                              SearchText="{Binding SearchBookText, Mode=TwoWay}" 
                                               Placeholder="Book"
                                               Margin="5"/>
 
-                <DatePicker Margin="5" Width="200"/>
-                <DatePicker Margin="5" Width="200"/>
+                <TextBlock Text="Due date"
+                           Foreground="White"
+                           FontSize="14"
+                           HorizontalAlignment="Center"
+                           Margin="0, 4, 0, 0"/>
+                <DatePicker Margin="5" Width="200"
+                            SelectedDate="{Binding SelectedDueDate}"/>
 
                 <Button Style="{StaticResource CommonButtonTheme}"
                         Content="Add"

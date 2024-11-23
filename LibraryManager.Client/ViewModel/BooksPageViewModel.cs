@@ -42,7 +42,7 @@ namespace LibraryManager.Client.ViewModel
             {
                 if (SelectedBook != null)
                 {
-                    MessageBox.Show($"Delete: {SelectedBook.Name}");
+                    _manager.RemoveBook(SelectedBook);
                 }
             });
 

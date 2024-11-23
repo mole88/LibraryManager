@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace LibraryManager.Model
 {
@@ -131,6 +132,22 @@ namespace LibraryManager.Model
                 entity.HasOne(t => t.Book)
                   .WithMany(b => b.Transactions)
                   .HasForeignKey(t => t.BookId);
+
+
+                entity.Property(e => e.DateTaken)
+                    .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
+
+                entity.Property(e => e.DueDate)
+                    .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
+
+                entity.Property(e => e.ReturnDate)
+                   .HasConversion(
+                       v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                       v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc).ToLocalTime() : (DateTime?)null);
             });
         }
     }

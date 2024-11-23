@@ -10,7 +10,6 @@ namespace LibraryManager.Client.ViewModel
     {
         private Manager _manager;
 
-        //TODO: Нормально реализовать связь
         public ReadOnlyObservableCollection<Visitor> Visitors => _manager.Visitors;
 
         private Visitor _selectedVisitor;
@@ -40,7 +39,7 @@ namespace LibraryManager.Client.ViewModel
             {
                 if (SelectedVisitor != null)
                 {
-                    MessageBox.Show($"Delete: {SelectedVisitor.FullName}");
+                    _manager.RemoveVisitor(SelectedVisitor);
                 }
             });
 
