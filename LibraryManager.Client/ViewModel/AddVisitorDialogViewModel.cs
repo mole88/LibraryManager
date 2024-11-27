@@ -1,5 +1,4 @@
 ﻿using LibraryManager.Client.Core;
-using LibraryManager.Client.SupportClasses;
 using LibraryManager.Model;
 
 namespace LibraryManager.Client.ViewModel
@@ -13,17 +12,16 @@ namespace LibraryManager.Client.ViewModel
             _manager = ManagerInstance.Instance;
             AddVisitorCommand = new RelayCommand((o) =>
             {
-                if (!string.IsNullOrEmpty(VisitorPhone) && !string.IsNullOrEmpty(VisitorName) && VisitorAge != 0)
+                if (!string.IsNullOrEmpty(VisitorPhone) && !string.IsNullOrEmpty(VisitorName) && int.TryParse(VisitorAge, out int age))
                 {
-                    Visitor newVisitor = new Visitor()
+                    Visitor newVisitor = new()
                     {
                         Id = UniqueIDMaker.GetUniqueID(_manager.Visitors),
                         FullName = VisitorName,
-                        Age = VisitorAge,
+                        Age = age,
                         PhoneNumber = VisitorPhone,
                     };
                     _manager.AddVisitor(newVisitor);
-                    ClearDialog();
                     CancelCommand.Execute(o);
                 }
             });
@@ -49,8 +47,8 @@ namespace LibraryManager.Client.ViewModel
             }
         }
 
-        private int _visitorAge;
-        public int VisitorAge
+        private string _visitorAge;
+        public string VisitorAge
         {
             get => _visitorAge;
             set
@@ -62,11 +60,5 @@ namespace LibraryManager.Client.ViewModel
 
         public RelayCommand AddVisitorCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
-        private void ClearDialog()
-        {
-            VisitorName = "";
-            VisitorAge = 0;
-            VisitorPhone = "";
-        }
     }
 }

@@ -2,7 +2,6 @@
 using LibraryManager.Client.Core;
 using System.Collections.ObjectModel;
 using System.Windows;
-using LibraryManager.Client.SupportClasses;
 
 namespace LibraryManager.Client.ViewModel
 {
@@ -10,8 +9,7 @@ namespace LibraryManager.Client.ViewModel
     {
         private Manager _manager;
 
-        //TODO: Нормально реализовать связь
-        public ReadOnlyObservableCollection<LibraryTransaction> Transactions => _manager.Transactions;
+        public ObservableCollection<LibraryTransaction> Transactions => _manager.Transactions;
 
         private LibraryTransaction _selectedTransaction;
 

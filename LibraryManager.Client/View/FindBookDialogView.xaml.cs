@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace LibraryManager.Client.View
 {
     /// <summary>
-    /// Логика взаимодействия для AddBookDialogView.xaml
+    /// Логика взаимодействия для FindBookDialogView.xaml
     /// </summary>
-    public partial class AddBookDialogView : UserControl
+    public partial class FindBookDialogView : UserControl
     {
-        public AddBookDialogView()
+        public FindBookDialogView()
         {
             InitializeComponent();
         }

@@ -52,6 +52,13 @@ namespace LibraryManager.Model
                     .HasColumnName("is_available")
                     .IsRequired();
 
+                entity.Property(t => t.CreationDate)
+                      .HasColumnName("creation_date")
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
+
                 entity.HasOne(b => b.BookAuthor)
                   .WithMany(a => a.Books)
                   .HasForeignKey(b => b.AuthorId);
@@ -71,6 +78,13 @@ namespace LibraryManager.Model
                 entity.Property(a => a.FullName)
                     .HasColumnName("fullname")
                     .IsRequired();
+
+                entity.Property(t => t.CreationDate)
+                      .HasColumnName("creation_date")
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
             });
         }
         private void CreateVisitors(ModelBuilder mb)
@@ -94,6 +108,13 @@ namespace LibraryManager.Model
                 entity.Property(v => v.PhoneNumber)
                     .HasColumnName("phone_number")
                     .IsRequired();
+
+                entity.Property(t => t.CreationDate)
+                      .HasColumnName("creation_date")
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
             });
         }
         private void CreateTransactions(ModelBuilder mb)
@@ -108,14 +129,23 @@ namespace LibraryManager.Model
 
                 entity.Property(t => t.DateTaken)
                       .HasColumnName("date_taken")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
 
                 entity.Property(t => t.DueDate)
                       .HasColumnName("due_date")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
 
                 entity.Property(t => t.ReturnDate)
-                    .HasColumnName("date_return");
+                    .HasColumnName("date_return")
+                    .HasConversion(
+                       v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                       v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc).ToLocalTime() : (DateTime?)null);
 
                 entity.Property(t => t.BookId)
                       .HasColumnName("book_id")
@@ -132,22 +162,6 @@ namespace LibraryManager.Model
                 entity.HasOne(t => t.Book)
                   .WithMany(b => b.Transactions)
                   .HasForeignKey(t => t.BookId);
-
-
-                entity.Property(e => e.DateTaken)
-                    .HasConversion(
-                        v => v.ToUniversalTime(),
-                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
-
-                entity.Property(e => e.DueDate)
-                    .HasConversion(
-                        v => v.ToUniversalTime(),
-                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
-
-                entity.Property(e => e.ReturnDate)
-                   .HasConversion(
-                       v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
-                       v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc).ToLocalTime() : (DateTime?)null);
             });
         }
     }

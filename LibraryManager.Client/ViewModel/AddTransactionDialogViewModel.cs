@@ -1,5 +1,4 @@
 ﻿using LibraryManager.Client.Core;
-using LibraryManager.Client.SupportClasses;
 using LibraryManager.Model;
 using System.Collections.ObjectModel;
 
@@ -31,7 +30,6 @@ namespace LibraryManager.Client.ViewModel
                         DueDate = SelectedDueDate
                     };
                     _manager.AddTransaction(trans);
-                    ClearDialog();
                     CancelCommand.Execute(o);
                 }
             });
@@ -75,12 +73,6 @@ namespace LibraryManager.Client.ViewModel
         private Visitor? GetVisitor(string fullName)
         {
             return _manager.Visitors.FirstOrDefault(v => v.FullName == fullName);
-        }
-        private void ClearDialog()
-        {
-            SearchBookText = "";
-            SearchVisitorText = "";
-            SelectedDueDate = DateTime.Now;
         }
     }
 }

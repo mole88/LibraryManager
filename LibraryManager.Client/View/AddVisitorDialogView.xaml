@@ -26,7 +26,9 @@
                 <TextBox Tag="Age"
                          Style="{StaticResource ResourceKey=TextBoxTheme}"
                          Margin="5"
-                        Text="{Binding VisitorAge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding VisitorAge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         InputScope="Number"
+                         PreviewTextInput="NumericTextBox_PreviewTextInput"/>
 
                 <TextBox Tag="Phone number"
                          Style="{StaticResource ResourceKey=TextBoxTheme}"

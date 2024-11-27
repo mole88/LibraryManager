@@ -1,7 +1,6 @@
 ﻿<Application x:Class="LibraryManager.Client.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LibraryManager.Client"
              xmlns:viewModel="clr-namespace:LibraryManager.Client.ViewModel"
              xmlns:view="clr-namespace:LibraryManager.Client.View"
              StartupUri="View/MainWindow.xaml">
@@ -49,9 +48,18 @@
             <DataTemplate DataType="{x:Type viewModel:AddAuthorDialogViewModel}">
                 <view:AddAuthorDialogView/>
             </DataTemplate>
-            
+
             <DataTemplate DataType="{x:Type viewModel:AddTransactionDialogViewModel}">
                 <view:AddTransactionDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:EditBookDialogViewModel}">
+                <view:EditBookDialogView/>
+            </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type viewModel:FindBookDialogViewModel}">
+                <view:FindBookDialogView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

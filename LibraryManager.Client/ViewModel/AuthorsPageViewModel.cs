@@ -2,14 +2,13 @@
 using System.Collections.ObjectModel;
 using LibraryManager.Client.Core;
 using System.Windows;
-using LibraryManager.Client.SupportClasses;
 
 namespace LibraryManager.Client.ViewModel
 {
     public class AuthorsPageViewModel : ObservableObject
     {
         private Manager _manager;
-        public ReadOnlyObservableCollection<Author> Authors => _manager.Authors;
+        public ObservableCollection<Author> Authors => _manager.Authors;
 
         private Author _selectedAuthor;
 

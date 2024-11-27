@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\refresh32.png" />
     <None Remove="Other\DBConnectionInfo.xml" />
   </ItemGroup>
 
@@ -19,6 +20,7 @@
     <Resource Include="Images\cross32.png" />
     <Resource Include="Images\delete32.png" />
     <Resource Include="Images\edit32.png" />
+    <Resource Include="Images\refresh32.png" />
     <Resource Include="Images\stat32.png" />
     <Resource Include="Images\transactions32.png" />
     <Resource Include="Images\user32.png" />

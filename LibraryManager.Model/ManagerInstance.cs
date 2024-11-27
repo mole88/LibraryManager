@@ -1,9 +1,6 @@
-﻿using LibraryManager.Model;
-
-namespace LibraryManager.Client.SupportClasses
+﻿namespace LibraryManager.Model
 {
-
-    static class ManagerInstance
+    public static class ManagerInstance
     {
         private static Manager? _instance { get; set; }
         public static Manager Instance

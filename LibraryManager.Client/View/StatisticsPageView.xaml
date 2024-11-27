@@ -34,7 +34,7 @@
                                VerticalAlignment="Center">  
                         <Run Text="New books" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewBooksMonth}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
@@ -44,7 +44,7 @@
                                VerticalAlignment="Center">
                         <Run Text="New visitors" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewVisitorsMonth}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
@@ -55,7 +55,7 @@
                                VerticalAlignment="Center">
                         <Run Text="New authors" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewAuthorsMonth}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
@@ -65,7 +65,7 @@
                                VerticalAlignment="Center">
                         <Run Text="New transactions" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewTransactionsMonth}" FontSize="46" />
                     </TextBlock>
                 </Border>
             </StackPanel>
@@ -92,7 +92,7 @@
                                VerticalAlignment="Center">  
                         <Run Text="New books" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewBooksAllTime, Mode=TwoWay}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
@@ -102,7 +102,7 @@
                                VerticalAlignment="Center">  
                         <Run Text="New visitors" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewVisitorsAllTime}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
@@ -112,7 +112,7 @@
                                VerticalAlignment="Center">
                         <Run Text="New authors" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewAuthorsAllTime}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
@@ -122,7 +122,7 @@
                                VerticalAlignment="Center">
                         <Run Text="New transactions" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewTransactionsAllTime}" FontSize="46" />
                     </TextBlock>
                 </Border>
             </StackPanel>

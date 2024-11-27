@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using LibraryManager.Client.Core;
 using System.Windows;
-using LibraryManager.Client.SupportClasses;
 
 namespace LibraryManager.Client.ViewModel
 {
@@ -10,7 +9,7 @@ namespace LibraryManager.Client.ViewModel
     {
         private Manager _manager;
 
-        public ReadOnlyObservableCollection<Visitor> Visitors => _manager.Visitors;
+        public ObservableCollection<Visitor> Visitors => _manager.Visitors;
 
         private Visitor _selectedVisitor;
 

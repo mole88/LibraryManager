@@ -1,5 +1,4 @@
 ﻿using LibraryManager.Client.Core;
-using LibraryManager.Client.SupportClasses;
 using LibraryManager.Model;
 using System;
 using System.Collections.Generic;
@@ -26,7 +25,6 @@ namespace LibraryManager.Client.ViewModel
                         FullName = AuthorName,
                     };
                     _manager.AddAuthor(newAuthor);
-                    ClearDialog();
                     CancelCommand.Execute(o);
                 }
             });
@@ -44,9 +42,5 @@ namespace LibraryManager.Client.ViewModel
 
         public RelayCommand AddAuthorCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
-        private void ClearDialog()
-        {
-            AuthorName = "";
-        }
     }
 }

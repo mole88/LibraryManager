@@ -86,39 +86,58 @@
                 </ListView>
             </Border>
 
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width = "3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Grid.Column="1">
 
-                <Button Style="{StaticResource OperationButtonTheme}"
-                        Command="{Binding AddCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../Images/add32.png"
-                               Margin="0, 0, 4, 0"
-                               Height="20"/>
-                        <TextBlock Text="Add"/>
+                    <Button Style="{StaticResource OperationButtonTheme}"
+                            Command="{Binding AddCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../Images/add32.png"
+                                   Margin="0, 0, 4, 0"
+                                   Height="20"/>
+                            <TextBlock Text="Add"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource OperationButtonTheme}"
+                            Command="{Binding SortCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../Images/sort32.png"
+                                   Margin="0, 0, 4, 0"
+                                   Height="20"/>
+                            <TextBlock Text="Sort"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource OperationButtonTheme}"
+                            Command="{Binding FindCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../Images/search32.png"
+                                   Margin="0, 0, 4, 0"
+                                   Height="20"/>
+                            <TextBlock Text="Find"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <Button Style="{StaticResource CommonButtonTheme}"
+                        Command="{Binding RefrashTableCommand}"
+                        Grid.Column="2"
+                        Width="50" Height="50"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+                    <StackPanel>
+                        <Image Source= "../Images/refresh32.png"/>
                     </StackPanel>
                 </Button>
-
-                <Button Style="{StaticResource OperationButtonTheme}"
-                        Command="{Binding SortCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../Images/sort32.png"
-                               Margin="0, 0, 4, 0"
-                               Height="20"/>
-                        <TextBlock Text="Sort"/>
-                    </StackPanel>
-                </Button>
-
-                <Button Style="{StaticResource OperationButtonTheme}"
-                        Command="{Binding FindCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../Images/search32.png"
-                               Margin="0, 0, 4, 0"
-                               Height="20"/>
-                        <TextBlock Text="Find"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>

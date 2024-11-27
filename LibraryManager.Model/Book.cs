@@ -8,6 +8,7 @@
         public Author? BookAuthor { get; set; }
         public int Year { get; set; }
         public bool IsAvailable { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
         public List<LibraryTransaction> Transactions { get; set; } = new();
     }
 }

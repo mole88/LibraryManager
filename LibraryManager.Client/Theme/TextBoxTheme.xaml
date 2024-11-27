@@ -18,17 +18,8 @@
                                      VerticalAlignment="Center"
                                      Padding="5"
                                      x:Name="SearchBox"
-                                     CaretBrush="#CFCFCF">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="0">
-                                                <Setter Property="Foreground" Value="Transparent"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                        <Setter Property="Foreground" Value="#CFCFCF"/>
-                                    </Style>
-                                </TextBox.Style>
+                                     CaretBrush="#CFCFCF"
+                                     Foreground="#CFCFCF">
                             </TextBox>
 
                             <TextBlock IsHitTestVisible="False"
@@ -46,17 +37,11 @@
                                             <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="0">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                                
-                                            </DataTrigger>
                                         </Style.Triggers>
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </Style>
                                 </TextBlock.Style>
-                                
                             </TextBlock>
-                            
                         </Grid>
                     </Border>
                 </ControlTemplate>

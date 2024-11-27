@@ -13,5 +13,9 @@
 
             return minUniqueValue;
         }
+        public static bool IsUnique<T>(int id, IEnumerable<T> array) where T: IIdentifiable
+        {
+            return array.All(item => item.Id != id);
+        }
     }
 }

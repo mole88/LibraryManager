@@ -1,5 +1,4 @@
 ﻿using LibraryManager.Client.Core;
-using LibraryManager.Client.SupportClasses;
 using LibraryManager.Model;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -16,7 +15,7 @@ namespace LibraryManager.Client.ViewModel
             AddBookCommand = new RelayCommand((o) =>
             {
                 Author bookAuthor = GetAuthor(SearchAuthorText);
-                if (bookAuthor != null && !string.IsNullOrEmpty(BookName) && BookYear != 0)
+                if (bookAuthor != null && !string.IsNullOrEmpty(BookName) && int.TryParse(BookYear, out int year))
                 {
                     Book newBook = new()
                     {
@@ -24,11 +23,10 @@ namespace LibraryManager.Client.ViewModel
                         Name = BookName,
                         BookAuthor = bookAuthor,
                         AuthorId = bookAuthor.Id,
-                        Year = BookYear,
+                        Year = year,
                         IsAvailable = true
                     };
                     _manager.AddBook(newBook);
-                    ClearDialog();
                     CancelCommand.Execute(o);
                 }
             });
@@ -44,14 +42,14 @@ namespace LibraryManager.Client.ViewModel
             }
         }
 
-        private int _bookYear;
-        public int BookYear
+        private string _bookYear;
+        public string BookYear
         {
             get => _bookYear;
             set
             {
                 _bookYear = value;
-                OnPropertyChanged(nameof(BookName));
+                OnPropertyChanged(nameof(BookYear));
             }
         }
 
@@ -73,12 +71,6 @@ namespace LibraryManager.Client.ViewModel
         private Author? GetAuthor(string fullName)
         {
             return _manager.Authors.FirstOrDefault(a => a.FullName == fullName);
-        }
-        private void ClearDialog()
-        {
-            BookName = "";
-            BookYear = 0;
-            SearchAuthorText = "";
         }
     }
 }

@@ -10,8 +10,16 @@ namespace LibraryManager.Client.ViewModel
     public class BooksPageViewModel : ObservableObject
     {
         private Manager _manager;
-
-        public ReadOnlyObservableCollection<Book> Books => _manager.Books;
+        private ObservableCollection<Book> _books;
+        public ObservableCollection<Book> Books
+        {
+            get { return _books; }
+            set
+            {
+                _books = value;
+                OnPropertyChanged(nameof(Books));
+            }
+        }
 
         private Book _selectedBook;
 
@@ -28,13 +36,17 @@ namespace LibraryManager.Client.ViewModel
         public BooksPageViewModel()
         {
             _manager = ManagerInstance.Instance;
-
+            Books = new(_manager.Books);
+            _manager.Books.CollectionChanged += (s, e) =>
+            {
+                Books = new(_manager.Books);
+            };
 
             EditCommand = new RelayCommand((o) =>
             {
                 if (SelectedBook != null)
                 {
-                    MessageBox.Show($"Edit: {SelectedBook.Name}");
+                    EditEvent?.Invoke(this, new EditEventArgs(SelectedBook));
                 }
             });
 
@@ -48,7 +60,12 @@ namespace LibraryManager.Client.ViewModel
 
             FindCommand = new RelayCommand((o) =>
             {
-                MessageBox.Show($"Find");
+                FindEvent?.Invoke(this, EventArgs.Empty);
+            });
+
+            RefrashTableCommand = new RelayCommand((o) =>
+            {
+                Books = new(_manager.Books);
             });
 
             SortCommand = new RelayCommand((o) =>
@@ -61,12 +78,16 @@ namespace LibraryManager.Client.ViewModel
                 AddEvent?.Invoke(this, EventArgs.Empty);
             });
         }
+
         public RelayCommand EditCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand AddCommand { get; set; }
         public RelayCommand FindCommand { get; set; }
         public RelayCommand SortCommand { get; set; }
+        public RelayCommand RefrashTableCommand { get; set; }
 
         public event EventHandler AddEvent;
+        public event EventHandler<EditEventArgs> EditEvent;
+        public event EventHandler FindEvent;
     }
 }

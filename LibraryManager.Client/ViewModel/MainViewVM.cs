@@ -1,7 +1,7 @@
 ﻿using LibraryManager.Model;
 using LibraryManager.Client.Core;
 using System.Windows;
-using LibraryManager.Client.SupportClasses;
+using System.Collections.ObjectModel;
 
 namespace LibraryManager.Client.ViewModel
 {
@@ -41,6 +41,7 @@ namespace LibraryManager.Client.ViewModel
 
             StatisticsViewCommand = new RelayCommand(o =>
             {
+                StatisticsVM.UpdateStatistics();
                 CurrentView = StatisticsVM;
             });
 
@@ -49,28 +50,52 @@ namespace LibraryManager.Client.ViewModel
                 CurrentDialog = null;
             });
 
+            //ADD
             BooksVM.AddEvent += (s, e) =>
             {
-                AddBookDialogVM.CancelCommand = CancelDialogCommand;
-                CurrentDialog = AddBookDialogVM;
+                var addBookDialogVM = new AddBookDialogViewModel();
+                addBookDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = addBookDialogVM;
             };
 
             VisitorsVM.AddEvent += (s, e) =>
             {
-                AddVisitorDialogVM.CancelCommand = CancelDialogCommand;
-                CurrentDialog = AddVisitorDialogVM;
+                var addVisitorDialogVM = new AddVisitorDialogViewModel();
+                addVisitorDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = addVisitorDialogVM;
             };
 
             AuthorsVM.AddEvent += (s, e) =>
             {
-                AddAuthorDialogVM.CancelCommand = CancelDialogCommand;
-                CurrentDialog = AddAuthorDialogVM;
+                var addAuthorDialogVM = new AddAuthorDialogViewModel();
+                addAuthorDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = addAuthorDialogVM;
             };
 
             TransactionsVM.AddEvent += (s, e) =>
             {
-                AddTransactionDialogVM.CancelCommand = CancelDialogCommand;
-                CurrentDialog = AddTransactionDialogVM;
+                var addTransactionDialogVM = new AddTransactionDialogViewModel();
+                addTransactionDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = addTransactionDialogVM;
+            };
+
+            //EDIT
+            BooksVM.EditEvent += (s, e) =>
+            {
+                var editBookDialogVM = new EditBookDialogViewModel((Book)e.EditedItem);
+
+                editBookDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = editBookDialogVM;
+            };
+
+            //FIND
+            BooksVM.FindEvent += (s, e) =>
+            {
+                var findBookDialogVM = new FindBookDialogViewModel(((BooksPageViewModel)s).Books);
+                findBookDialogVM.CancelCommand = CancelDialogCommand;
+
+                CurrentDialog = findBookDialogVM;
+
             };
         }
 
@@ -98,11 +123,6 @@ namespace LibraryManager.Client.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        public AddBookDialogViewModel AddBookDialogVM { get; set; } = new();
-        public AddVisitorDialogViewModel AddVisitorDialogVM { get; set; } = new();
-        public AddAuthorDialogViewModel AddAuthorDialogVM { get; set; } = new();
-        public AddTransactionDialogViewModel AddTransactionDialogVM { get; set; } = new();
 
         private object _currentDialog = null;
         public object CurrentDialog
