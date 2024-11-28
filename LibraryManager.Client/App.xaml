@@ -1,7 +1,17 @@
 ﻿<Application x:Class="LibraryManager.Client.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:viewModel="clr-namespace:LibraryManager.Client.ViewModel"
+             xmlns:booksViewModels="clr-namespace:LibraryManager.Client.ViewModel.BooksViewModels"
+             xmlns:authorsViewModels="clr-namespace:LibraryManager.Client.ViewModel.AuthorsViewModels"
+             xmlns:visitorsViewModels="clr-namespace:LibraryManager.Client.ViewModel.VisitorsViewModels"
+             xmlns:transactionsViewModels="clr-namespace:LibraryManager.Client.ViewModel.TransactionsViewModels"
+             
+             xmlns:booksViews="clr-namespace:LibraryManager.Client.View.BooksViews"
+             xmlns:authorsViews="clr-namespace:LibraryManager.Client.View.AuthorsViews"
+             xmlns:visitorsViews="clr-namespace:LibraryManager.Client.View.VisitorsViews"
+             xmlns:transactionsViews="clr-namespace:LibraryManager.Client.View.TransactionsViews"
+             
+             xmlns:viewModels="clr-namespace:LibraryManager.Client.ViewModel"
              xmlns:view="clr-namespace:LibraryManager.Client.View"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
@@ -16,50 +26,61 @@
                 <ResourceDictionary Source="Theme/PopupTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DatePickerTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <DataTemplate DataType="{x:Type viewModel:BooksPageViewModel}">
-                <view:BooksPageView/>
+            
+            <DataTemplate DataType="{x:Type booksViewModels:BooksPageViewModel}">
+                <booksViews:BooksPageView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:VisitorsPageViewModel}">
-                <view:VisitorsPageView/>
+            <DataTemplate DataType="{x:Type visitorsViewModels:VisitorsPageViewModel}">
+                <visitorsViews:VisitorsPageView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:AuthorsPageViewModel}">
-                <view:AuthorsPageView/>
+            <DataTemplate DataType="{x:Type authorsViewModels:AuthorsPageViewModel}">
+                <authorsViews:AuthorsPageView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:TransactionsPageViewModel}">
-                <view:TransactionsPageView/>
+            <DataTemplate DataType="{x:Type transactionsViewModels:TransactionsPageViewModel}">
+                <transactionsViews:TransactionsPageView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:StatisticsPageViewModel}">
+            <DataTemplate DataType="{x:Type viewModels:StatisticsPageViewModel}">
                 <view:StatisticsPageView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:AddBookDialogViewModel}">
-                <view:AddBookDialogView/>
+            <DataTemplate DataType="{x:Type booksViewModels:AddBookDialogViewModel}">
+                <booksViews:AddBookDialogView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:AddVisitorDialogViewModel}">
-                <view:AddVisitorDialogView/>
+            <DataTemplate DataType="{x:Type visitorsViewModels:AddVisitorDialogViewModel}">
+                <visitorsViews:AddVisitorDialogView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:AddAuthorDialogViewModel}">
-                <view:AddAuthorDialogView/>
+            <DataTemplate DataType="{x:Type authorsViewModels:AddAuthorDialogViewModel}">
+                <authorsViews:AddAuthorDialogView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:AddTransactionDialogViewModel}">
-                <view:AddTransactionDialogView/>
+            <DataTemplate DataType="{x:Type transactionsViewModels:AddTransactionDialogViewModel}">
+                <transactionsViews:AddTransactionDialogView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:EditBookDialogViewModel}">
-                <view:EditBookDialogView/>
+            <DataTemplate DataType="{x:Type booksViewModels:EditBookDialogViewModel}">
+                <booksViews:EditBookDialogView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type visitorsViewModels:EditVisitorDialogViewModel}">
+                <visitorsViews:EditVisitorDialogView/>
+            </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:FindBookDialogViewModel}">
-                <view:FindBookDialogView/>
+            <DataTemplate DataType="{x:Type transactionsViewModels:EditTransactionDialogViewModel}">
+                <transactionsViews:EditTransactionDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type authorsViewModels:EditAuthorDialogViewModel}">
+                <authorsViews:EditAuthorDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type booksViewModels:FindBookDialogViewModel}">
+                <booksViews:FindBookDialogView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

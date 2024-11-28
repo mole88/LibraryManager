@@ -2,6 +2,10 @@
 using LibraryManager.Client.Core;
 using System.Windows;
 using System.Collections.ObjectModel;
+using LibraryManager.Client.ViewModel.BooksViewModels;
+using LibraryManager.Client.ViewModel.AuthorsViewModels;
+using LibraryManager.Client.ViewModel.TransactionsViewModels;
+using LibraryManager.Client.ViewModel.VisitorsViewModels;
 
 namespace LibraryManager.Client.ViewModel
 {
