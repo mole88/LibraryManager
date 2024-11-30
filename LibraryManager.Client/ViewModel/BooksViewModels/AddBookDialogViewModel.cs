@@ -12,7 +12,7 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
         public AddBookDialogViewModel()
         {
             _manager = ManagerInstance.Instance;
-            AddBookCommand = new RelayCommand((o) =>
+            AddBookCommand = new RelayCommand(async (o) =>
             {
                 Author bookAuthor = GetAuthor(SearchAuthorText);
                 if (bookAuthor != null && !string.IsNullOrEmpty(BookName) && int.TryParse(BookYear, out int year))
@@ -26,7 +26,7 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
                         Year = year,
                         IsAvailable = true
                     };
-                    _manager.AddBook(newBook);
+                    await _manager.AddBookAsync(newBook);
                     CancelCommand.Execute(o);
                 }
             });

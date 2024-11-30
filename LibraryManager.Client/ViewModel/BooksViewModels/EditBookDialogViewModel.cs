@@ -1,13 +1,7 @@
 ﻿using LibraryManager.Client.Core;
 using LibraryManager.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Xml.Linq;
 
 namespace LibraryManager.Client.ViewModel.BooksViewModels
 {
@@ -25,7 +19,7 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
             SearchAuthorText = editedBook.BookAuthor.FullName;
 
 
-            EditBookCommand = new RelayCommand((o) =>
+            EditBookCommand = new RelayCommand(async (o) =>
             {
                 Author bookAuthor = GetAuthor(SearchAuthorText);
                 if (bookAuthor != null && !string.IsNullOrEmpty(BookName)
@@ -42,8 +36,7 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
                             Year = year
                         };
 
-                        _manager.EditBook(editedBook, newBook);
-                        ClearDialog();
+                        await _manager.EditBookAsync(editedBook, newBook);
                         CancelCommand.Execute(o);
                     }
                     else
@@ -104,12 +97,6 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
         private Author? GetAuthor(string fullName)
         {
             return _manager.Authors.FirstOrDefault(a => a.FullName == fullName);
-        }
-        private void ClearDialog()
-        {
-            BookName = "";
-            BookYear = "";
-            SearchAuthorText = "";
         }
     }
 }

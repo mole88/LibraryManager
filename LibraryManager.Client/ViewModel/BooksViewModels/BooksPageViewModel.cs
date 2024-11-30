@@ -3,6 +3,7 @@ using LibraryManager.Client.Core;
 using System.Collections.ObjectModel;
 using System.Windows;
 using LibraryManager.Client.SupportClasses;
+using NLog;
 
 
 namespace LibraryManager.Client.ViewModel.BooksViewModels
@@ -10,6 +11,8 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
     public class BooksPageViewModel : ObservableObject
     {
         private Manager _manager;
+        Logger log = LogManager.GetCurrentClassLogger();
+
         private ObservableCollection<Book> _books;
         public ObservableCollection<Book> Books
         {
@@ -47,35 +50,41 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
                 if (SelectedBook != null)
                 {
                     EditEvent?.Invoke(this, new EditEventArgs(SelectedBook));
+                    log.Info("Book edited");
                 }
             });
 
-            DeleteCommand = new RelayCommand((o) =>
+            DeleteCommand = new RelayCommand(async (o) =>
             {
                 if (SelectedBook != null)
                 {
-                    _manager.RemoveBook(SelectedBook);
+                    await _manager.RemoveBookAsync(SelectedBook);
+                    log.Info("Book deleted");
                 }
             });
 
             FindCommand = new RelayCommand((o) =>
             {
                 FindEvent?.Invoke(this, EventArgs.Empty);
+                log.Info("Book found");
             });
 
             RefrashTableCommand = new RelayCommand((o) =>
             {
                 Books = new(_manager.Books);
+                log.Debug("Book table refrashed");
             });
 
             SortCommand = new RelayCommand((o) =>
             {
                 MessageBox.Show($"Sort");
+
             });
 
             AddCommand = new RelayCommand((o) =>
             {
                 AddEvent?.Invoke(this, EventArgs.Empty);
+                log.Info("Book added");
             });
         }
 

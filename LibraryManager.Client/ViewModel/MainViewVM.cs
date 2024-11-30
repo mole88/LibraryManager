@@ -1,17 +1,19 @@
 ﻿using LibraryManager.Model;
 using LibraryManager.Client.Core;
 using System.Windows;
-using System.Collections.ObjectModel;
 using LibraryManager.Client.ViewModel.BooksViewModels;
 using LibraryManager.Client.ViewModel.AuthorsViewModels;
 using LibraryManager.Client.ViewModel.TransactionsViewModels;
 using LibraryManager.Client.ViewModel.VisitorsViewModels;
+using NLog;
 
 namespace LibraryManager.Client.ViewModel
 {
     public class MainViewVM : ObservableObject
     {
         private Manager _manager;
+        Logger log = LogManager.GetCurrentClassLogger();
+
         public MainViewVM()
         {
             try{
@@ -26,32 +28,38 @@ namespace LibraryManager.Client.ViewModel
             BooksViewCommand = new RelayCommand(o =>
             {
                 CurrentView = BooksVM;
+                log.Debug("Changed table to Books");
             });
 
             VisitorsViewCommand = new RelayCommand(o =>
             {
                 CurrentView = VisitorsVM;
+                log.Debug("Changed table to Visitors");
             });
 
             AuthorsViewCommand = new RelayCommand(o =>
             {
                 CurrentView = AuthorsVM;
+                log.Debug("Changed table to Authors");
             });
 
             TransactionsViewCommand = new RelayCommand(o =>
             {
                 CurrentView = TransactionsVM;
+                log.Debug("Changed table to Transactions");
             });
 
             StatisticsViewCommand = new RelayCommand(o =>
             {
                 StatisticsVM.UpdateStatistics();
                 CurrentView = StatisticsVM;
+                log.Debug("Changed table to Statistics");
             });
 
             CancelDialogCommand = new RelayCommand(o =>
             {
                 CurrentDialog = null;
+                log.Debug("Changed table to Books");
             });
 
             //ADD
@@ -60,6 +68,7 @@ namespace LibraryManager.Client.ViewModel
                 var addBookDialogVM = new AddBookDialogViewModel();
                 addBookDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = addBookDialogVM;
+
             };
 
             VisitorsVM.AddEvent += (s, e) =>
@@ -92,6 +101,30 @@ namespace LibraryManager.Client.ViewModel
                 CurrentDialog = editBookDialogVM;
             };
 
+            VisitorsVM.EditEvent += (s, e) =>
+            {
+                var editVisitorDialogVM = new EditVisitorDialogViewModel((Visitor)e.EditedItem);
+
+                editVisitorDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = editVisitorDialogVM;
+            };
+
+            AuthorsVM.EditEvent += (s, e) =>
+            {
+                var editAuthorDialogVM = new EditAuthorDialogViewModel((Author)e.EditedItem);
+
+                editAuthorDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = editAuthorDialogVM;
+            };
+
+            TransactionsVM.EditEvent += (s, e) =>
+            {
+                var editTransDialogVM = new EditTransactionDialogViewModel((LibraryTransaction)e.EditedItem);
+
+                editTransDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = editTransDialogVM;
+            };
+
             //FIND
             BooksVM.FindEvent += (s, e) =>
             {
@@ -99,7 +132,30 @@ namespace LibraryManager.Client.ViewModel
                 findBookDialogVM.CancelCommand = CancelDialogCommand;
 
                 CurrentDialog = findBookDialogVM;
+            };
 
+            VisitorsVM.FindEvent += (s, e) =>
+            {
+                var findVisitorDialogVM = new FindVisitorDialogViewModel(((VisitorsPageViewModel)s).Visitors);
+                findVisitorDialogVM.CancelCommand = CancelDialogCommand;
+
+                CurrentDialog = findVisitorDialogVM;
+            };
+
+            TransactionsVM.FindEvent += (s, e) =>
+            {
+                var findTransDialogVM = new FindTransactionDialogViewModel(((TransactionsPageViewModel)s).Transactions);
+                findTransDialogVM.CancelCommand = CancelDialogCommand;
+
+                CurrentDialog = findTransDialogVM;
+            };
+
+            AuthorsVM.FindEvent += (s, e) =>
+            {
+                var findAuthorDialogVM = new FindAuthorDialogViewModel(((AuthorsPageViewModel)s).Authors);
+                findAuthorDialogVM.CancelCommand = CancelDialogCommand;
+
+                CurrentDialog = findAuthorDialogVM;
             };
         }
 

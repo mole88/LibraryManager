@@ -12,7 +12,7 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
         public AddTransactionDialogViewModel()
         {
             _manager = ManagerInstance.Instance;
-            AddTransactionCommand = new RelayCommand((o) =>
+            AddTransactionCommand = new RelayCommand(async (o) =>
             {
                 Book book = GetBook(SearchBookText);
                 Visitor visitor = GetVisitor(SearchVisitorText);
@@ -29,7 +29,7 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
                         DateTaken = DateTime.Now,
                         DueDate = SelectedDueDate
                     };
-                    _manager.AddTransaction(trans);
+                    await _manager.AddTransactionAsync(trans);
                     CancelCommand.Execute(o);
                 }
             });

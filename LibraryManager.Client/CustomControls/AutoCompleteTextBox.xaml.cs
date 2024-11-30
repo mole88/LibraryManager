@@ -83,7 +83,9 @@ namespace LibraryManager.Client.CustomControls
                 foreach (var item in ItemsSource)
                 {
                     var propertyValue = item;
-                    if (!string.IsNullOrWhiteSpace(propertyValue) && propertyValue.Contains(query, StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(propertyValue) &&
+                        propertyValue.Contains(query, StringComparison.OrdinalIgnoreCase) &&
+                        !propertyValue.Equals(query, StringComparison.OrdinalIgnoreCase))
                     {
                         FilteredItems.Add(item);
                     }

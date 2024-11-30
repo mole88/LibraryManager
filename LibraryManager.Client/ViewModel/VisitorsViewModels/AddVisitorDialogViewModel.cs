@@ -10,7 +10,7 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
         public AddVisitorDialogViewModel()
         {
             _manager = ManagerInstance.Instance;
-            AddVisitorCommand = new RelayCommand((o) =>
+            AddVisitorCommand = new RelayCommand(async (o) =>
             {
                 if (!string.IsNullOrEmpty(VisitorPhone) && !string.IsNullOrEmpty(VisitorName) && int.TryParse(VisitorAge, out int age))
                 {
@@ -21,7 +21,7 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
                         Age = age,
                         PhoneNumber = VisitorPhone,
                     };
-                    _manager.AddVisitor(newVisitor);
+                    await _manager.AddVisitorAsync(newVisitor);
                     CancelCommand.Execute(o);
                 }
             });

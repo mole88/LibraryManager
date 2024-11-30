@@ -12,57 +12,61 @@ namespace LibraryManager.Client.Reports
         {
             QuestPDF.Settings.License = LicenseType.Community;
         }
-        public void GenerateReport()
+        public async Task GenerateReportAsync()
         {
             var books = _manager.Books;
-            Document.Create(container =>
+
+            await Task.Run(async () =>
             {
-                container.Page(page =>
+                Document.Create(container =>
                 {
-                    page.Size(PageSizes.A4);
-                    page.Margin(2, Unit.Centimetre);
-                    page.PageColor(Colors.White);
-                    page.DefaultTextStyle(x => x.FontSize(16));
-
-                    page.Header()
-                        .Text("Library report")
-                        .SemiBold().FontSize(36);
-
-                    page.Content().PaddingVertical(10).Column(column =>
+                    container.Page(page =>
                     {
-                        column.Spacing(10);
+                        page.Size(PageSizes.A4);
+                        page.Margin(2, Unit.Centimetre);
+                        page.PageColor(Colors.White);
+                        page.DefaultTextStyle(x => x.FontSize(16));
 
-                        column.Item().Text("Books in library").SemiBold().AlignCenter();
-                        column.Item().Table(table =>
+                        page.Header()
+                            .Text("Library report")
+                            .SemiBold().FontSize(36);
+
+                        page.Content().PaddingVertical(10).Column(column =>
                         {
-                            table.ColumnsDefinition(columns =>
+                            column.Spacing(10);
+
+                            column.Item().Text("Books in library").SemiBold().AlignCenter();
+                            column.Item().Table(table =>
                             {
-                                columns.RelativeColumn();
-                                columns.RelativeColumn();
-                                columns.RelativeColumn();
-                                columns.RelativeColumn();
+                                table.ColumnsDefinition(columns =>
+                                {
+                                    columns.RelativeColumn();
+                                    columns.RelativeColumn();
+                                    columns.RelativeColumn();
+                                    columns.RelativeColumn();
+                                });
+
+                                for (int i = 0; i < _manager.Books.Count; i++)
+                                {
+                                    table.Cell().Text(books[i].Id);
+                                    table.Cell().Text(books[i].Name);
+                                    table.Cell().Text(books[i].BookAuthor.FullName);
+                                    table.Cell().Text(books[i].Year);
+                                }
                             });
+                        });
 
-                            for (int i = 0; i < _manager.Books.Count; i++)
+                        page.Footer()
+                            .AlignCenter()
+                            .Text(x =>
                             {
-                                table.Cell().Text(books[i].Id);
-                                table.Cell().Text(books[i].Name);
-                                table.Cell().Text(books[i].BookAuthor.FullName);
-                                table.Cell().Text(books[i].Year);
-                            }
-                        });
+                                x.Span("Page ");
+                                x.CurrentPageNumber();
+                            });
                     });
-
-                    page.Footer()
-                        .AlignCenter()
-                        .Text(x =>
-                        {
-                            x.Span("Page ");
-                            x.CurrentPageNumber();
-                        });
-                });
-            })
+                })
                 .GeneratePdfAndShow();
+            });
         }
     }
 }

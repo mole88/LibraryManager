@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using LibraryManager.Client.Core;
 using System.Windows;
+using LibraryManager.Client.SupportClasses;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace LibraryManager.Client.ViewModel.VisitorsViewModels
 {
@@ -9,10 +11,18 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
     {
         private Manager _manager;
 
-        public ObservableCollection<Visitor> Visitors => _manager.Visitors;
+        private ObservableCollection<Visitor> _visitors;
+        public ObservableCollection<Visitor> Visitors
+        {
+            get { return _visitors; }
+            set
+            {
+                _visitors = value;
+                OnPropertyChanged(nameof(Visitors));
+            }
+        }
 
         private Visitor _selectedVisitor;
-
         public Visitor SelectedVisitor
         {
             get { return _selectedVisitor; }
@@ -25,20 +35,25 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
         public VisitorsPageViewModel()
         {
             _manager = ManagerInstance.Instance;
+            Visitors = new(_manager.Visitors);
+            _manager.Visitors.CollectionChanged += (s, e) =>
+            {
+                Visitors = new(_manager.Visitors);
+            };
 
-            EditCommand = new RelayCommand((o) =>
+            EditCommand = new RelayCommand(async (o) =>
             {
                 if (SelectedVisitor != null)
                 {
-                    MessageBox.Show($"Edit: {SelectedVisitor.FullName}");
+                    EditEvent?.Invoke(this, new EditEventArgs(SelectedVisitor));
                 }
             });
 
-            DeleteCommand = new RelayCommand((o) =>
+            DeleteCommand = new RelayCommand(async (o) =>
             {
                 if (SelectedVisitor != null)
                 {
-                    _manager.RemoveVisitor(SelectedVisitor);
+                    await _manager.RemoveVisitorAsync(SelectedVisitor);
                 }
             });
 
@@ -49,7 +64,12 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
 
             FindCommand = new RelayCommand((o) =>
             {
-                MessageBox.Show($"Find");
+                FindEvent?.Invoke(this, EventArgs.Empty);
+            });
+
+            RefrashTableCommand = new RelayCommand((o) =>
+            {
+                Visitors = new(_manager.Visitors);
             });
 
             SortCommand = new RelayCommand((o) =>
@@ -62,7 +82,11 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
         public RelayCommand AddCommand { get; set; }
         public RelayCommand FindCommand { get; set; }
         public RelayCommand SortCommand { get; set; }
+        public RelayCommand RefrashTableCommand { get; set; }
 
         public event EventHandler AddEvent;
+        public event EventHandler<EditEventArgs> EditEvent;
+        public event EventHandler FindEvent;
+
     }
 }

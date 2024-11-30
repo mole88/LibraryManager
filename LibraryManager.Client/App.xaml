@@ -82,6 +82,18 @@
             <DataTemplate DataType="{x:Type booksViewModels:FindBookDialogViewModel}">
                 <booksViews:FindBookDialogView/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type authorsViewModels:FindAuthorDialogViewModel}">
+                <authorsViews:FindAuthorDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type visitorsViewModels:FindVisitorDialogViewModel}">
+                <visitorsViews:FindVisitorDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type transactionsViewModels:FindTransactionDialogViewModel}">
+                <transactionsViews:FindTransactionDialogView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

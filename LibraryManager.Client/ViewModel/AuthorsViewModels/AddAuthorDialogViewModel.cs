@@ -15,7 +15,7 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
         public AddAuthorDialogViewModel()
         {
             _manager = ManagerInstance.Instance;
-            AddAuthorCommand = new RelayCommand((o) =>
+            AddAuthorCommand = new RelayCommand(async (o) =>
             {
                 if (!string.IsNullOrEmpty(AuthorName))
                 {
@@ -24,7 +24,7 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
                         Id = UniqueIDMaker.GetUniqueID(_manager.Authors),
                         FullName = AuthorName,
                     };
-                    _manager.AddAuthor(newAuthor);
+                    await _manager.AddAuthorAsync(newAuthor);
                     CancelCommand.Execute(o);
                 }
             });

@@ -6,17 +6,14 @@ namespace LibraryManager.Client.ViewModel
 {
     public class StatisticsPageViewModel : ObservableObject
     {
-        private Manager _manager;
         private Statistics _stat;
 
         public StatisticsPageViewModel()
         {
-            _manager = ManagerInstance.Instance;
-
-            GenerateReportCommand = new RelayCommand((o) =>
+            GenerateReportCommand = new RelayCommand(async (o) =>
             {
                 var reportGenerator = new PdfReportGenerator();
-                reportGenerator.GenerateReport();
+                await reportGenerator.GenerateReportAsync();
             });
         }
         public string NewBooksMonth {  get; set; }

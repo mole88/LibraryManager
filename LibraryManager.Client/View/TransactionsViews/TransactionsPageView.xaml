@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LibraryManager.Client.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.Resources>
         <SolidColorBrush x:Key="ListViewItemMouseOverBackground">#4d79ff</SolidColorBrush>
         <SolidColorBrush x:Key="ListViewItemMouseOverForeground">White</SolidColorBrush>
@@ -34,12 +34,12 @@
                  Foreground="White">
                         <MenuItem Header="Edit" Command="{Binding EditCommand}">
                             <MenuItem.Icon>
-                                <Image Source="../Images/edit32.png"/>
+                                <Image Source="../../Images/edit32.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Header="Delete" Command="{Binding DeleteCommand}">
                             <MenuItem.Icon>
-                                <Image Source="../Images/delete32.png"/>
+                                <Image Source="../../Images/delete32.png"/>
                             </MenuItem.Icon>
                         </MenuItem>
                     </ContextMenu>
@@ -100,38 +100,53 @@
                 </ListView.View>
             </ListView>
         </Border>
-        <StackPanel Orientation="Horizontal"
-            HorizontalAlignment="Center">
+        <Grid>
+            <StackPanel Orientation="Horizontal"
+    HorizontalAlignment="Center"
+                        Grid.Column="1">
 
-            <Button Style="{StaticResource OperationButtonTheme}"
-            Command="{Binding AddCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/add32.png"
-                   Margin="0, 0, 4, 0"
-                   Height="20"/>
-                    <TextBlock Text="Add"/>
+                <Button Style="{StaticResource OperationButtonTheme}"
+    Command="{Binding AddCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Images/add32.png"
+           Margin="0, 0, 4, 0"
+           Height="20"/>
+                        <TextBlock Text="Add"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource OperationButtonTheme}"
+    Command="{Binding SortCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Images/sort32.png"
+           Margin="0, 0, 4, 0"
+           Height="20"/>
+                        <TextBlock Text="Sort"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource OperationButtonTheme}"
+    Command="{Binding FindCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../../Images/search32.png"
+           Margin="0, 0, 4, 0"
+           Height="20"/>
+                        <TextBlock Text="Find"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <Button Style="{StaticResource CommonButtonTheme}"
+                    Command="{Binding RefrashTableCommand}"
+                    Grid.Column="2"
+                    Width="50" Height="50"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">    
+                <StackPanel>
+                    <Image Source= "../../Images/refresh32.png"/>
                 </StackPanel>
             </Button>
-
-            <Button Style="{StaticResource OperationButtonTheme}"
-            Command="{Binding SortCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/sort32.png"
-                   Margin="0, 0, 4, 0"
-                   Height="20"/>
-                    <TextBlock Text="Sort"/>
-                </StackPanel>
-            </Button>
-
-            <Button Style="{StaticResource OperationButtonTheme}"
-            Command="{Binding FindCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/search32.png"
-                   Margin="0, 0, 4, 0"
-                   Height="20"/>
-                    <TextBlock Text="Find"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
+        </Grid>
+        
     </StackPanel>
 </UserControl>

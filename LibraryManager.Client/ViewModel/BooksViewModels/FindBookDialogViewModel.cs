@@ -7,7 +7,6 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
     internal class FindBookDialogViewModel : ObservableObject
     {
         private Manager _manager;
-        public ObservableCollection<string> AuthorsNames => new(_manager.Authors.Select(a => a.FullName));
         public FindBookDialogViewModel(ObservableCollection<Book> table)
         {
             _manager = ManagerInstance.Instance;

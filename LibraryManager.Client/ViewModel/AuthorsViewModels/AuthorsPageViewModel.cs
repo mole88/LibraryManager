@@ -2,13 +2,25 @@
 using System.Collections.ObjectModel;
 using LibraryManager.Client.Core;
 using System.Windows;
+using LibraryManager.Client.SupportClasses;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace LibraryManager.Client.ViewModel.AuthorsViewModels
 {
     public class AuthorsPageViewModel : ObservableObject
     {
         private Manager _manager;
-        public ObservableCollection<Author> Authors => _manager.Authors;
+
+        private ObservableCollection<Author> _authors;
+        public ObservableCollection<Author> Authors
+        {
+            get { return _authors; }
+            set
+            {
+                _authors = value;
+                OnPropertyChanged(nameof(Authors));
+            }
+        }
 
         private Author _selectedAuthor;
 
@@ -24,19 +36,25 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
         public AuthorsPageViewModel()
         {
             _manager = ManagerInstance.Instance;
+            Authors = new(_manager.Authors);
+            _manager.Authors.CollectionChanged += (s, e) =>
+            {
+                Authors = new(_manager.Authors);
+            };
+
             EditCommand = new RelayCommand((o) =>
             {
                 if (SelectedAuthor != null)
                 {
-                    MessageBox.Show($"Edit: {SelectedAuthor.FullName}");
+                    EditEvent?.Invoke(this, new EditEventArgs(SelectedAuthor));
                 }
             });
 
-            DeleteCommand = new RelayCommand((o) =>
+            DeleteCommand = new RelayCommand(async (o) =>
             {
                 if (SelectedAuthor != null)
                 {
-                    _manager.RemoveAuthor(SelectedAuthor);
+                    await _manager.RemoveAuthorAsync(SelectedAuthor);
                 }
             });
 
@@ -47,7 +65,12 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
 
             FindCommand = new RelayCommand((o) =>
             {
-                MessageBox.Show($"Find");
+                FindEvent?.Invoke(this, EventArgs.Empty);
+            });
+
+            RefrashTableCommand = new RelayCommand((o) =>
+            {
+                Authors = new(_manager.Authors);
             });
 
             SortCommand = new RelayCommand((o) =>
@@ -61,7 +84,11 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
         public RelayCommand AddCommand { get; set; }
         public RelayCommand FindCommand { get; set; }
         public RelayCommand SortCommand { get; set; }
+        public RelayCommand RefrashTableCommand { get; set; }
+
         public event EventHandler AddEvent;
+        public event EventHandler<EditEventArgs> EditEvent;
+        public event EventHandler FindEvent;
 
     }
 }
