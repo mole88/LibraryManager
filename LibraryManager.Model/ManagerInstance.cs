@@ -2,7 +2,7 @@
 {
     public static class ManagerInstance
     {
-        private static Manager? _instance { get; set; }
+        private static Manager? _instance;
         public static Manager Instance
         {
             get

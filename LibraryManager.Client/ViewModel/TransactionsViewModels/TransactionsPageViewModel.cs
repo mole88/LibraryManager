@@ -22,7 +22,6 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
         }
 
         private LibraryTransaction _selectedTransaction;
-
         public LibraryTransaction SelectedTransaction
         {
             get { return _selectedTransaction; }
@@ -35,17 +34,15 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
         public TransactionsPageViewModel()
         {
             _manager = ManagerInstance.Instance;
-            Transactions = new(_manager.Transactions);
-            _manager.Transactions.CollectionChanged += (s, e) =>
-            {
-                Transactions = new(_manager.Transactions);
-            };
+
+            RefrashTransactions();
+            _manager.Transactions.CollectionChanged += (s, e) => RefrashTransactions();
 
             EditCommand = new RelayCommand((o) =>
             {
                 if (SelectedTransaction != null)
                 {
-                    EditEvent?.Invoke(this, new EditEventArgs(SelectedTransaction));
+                    EditEvent?.Invoke(this, new ObjEventArgs(SelectedTransaction));
                 }
             });
 
@@ -53,7 +50,15 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
             {
                 if (SelectedTransaction != null)
                 {
-                    await _manager.RemoveTransactionAsync(SelectedTransaction);
+                    DeleteEvent?.Invoke(this, new ObjEventArgs(SelectedTransaction));
+                }
+            });
+
+            CompleteCommand = new RelayCommand(async (o) =>
+            {
+                if (SelectedTransaction != null && SelectedTransaction.IsAvailable)
+                {
+                    CompleteEvent?.Invoke(this, new ObjEventArgs(SelectedTransaction));
                 }
             });
 
@@ -69,7 +74,7 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
 
             RefrashTableCommand = new RelayCommand((o) =>
             {
-                Transactions = new(_manager.Transactions);
+                RefrashTransactions();
             });
 
             SortCommand = new RelayCommand((o) =>
@@ -77,15 +82,26 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
                 MessageBox.Show($"Sort");
             });
         }
+        public void RefrashTransactions()
+        {
+            Transactions = new ObservableCollection<LibraryTransaction>(
+                _manager.Transactions
+                    .OrderBy(t => !t.IsAvailable)
+                    .ThenBy(t => t.Id)
+            );
+        }
         public RelayCommand EditCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
+        public RelayCommand CompleteCommand { get; set; }
         public RelayCommand AddCommand { get; set; }
         public RelayCommand FindCommand { get; set; }
         public RelayCommand SortCommand { get; set; }
         public RelayCommand RefrashTableCommand { get; set; }
 
         public event EventHandler AddEvent;
-        public event EventHandler<EditEventArgs> EditEvent;
+        public event EventHandler<ObjEventArgs> EditEvent;
+        public event EventHandler<ObjEventArgs> DeleteEvent;
+        public event EventHandler<ObjEventArgs> CompleteEvent;
         public event EventHandler FindEvent;
     }
 }

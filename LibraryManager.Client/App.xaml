@@ -22,9 +22,7 @@
                 <ResourceDictionary Source="Theme/TableTheme.xaml"/>
                 <ResourceDictionary Source="Theme/OperationButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/CloseMinimizeButtonTheme.xaml"/>
-                <ResourceDictionary Source="Theme/ComboBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/PopupTheme.xaml"/>
-                <ResourceDictionary Source="Theme/DatePickerTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
             <DataTemplate DataType="{x:Type booksViewModels:BooksPageViewModel}">
@@ -93,6 +91,26 @@
 
             <DataTemplate DataType="{x:Type transactionsViewModels:FindTransactionDialogViewModel}">
                 <transactionsViews:FindTransactionDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type booksViewModels:DeleteBookDialogViewModel}">
+                <booksViews:DeleteBookDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type visitorsViewModels:DeleteVisitorDialogViewModel}">
+                <visitorsViews:DeleteVisitorDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type authorsViewModels:DeleteAuthorDialogViewModel}">
+                <authorsViews:DeleteAuthorDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type transactionsViewModels:DeleteTransactionDialogViewModel}">
+                <transactionsViews:DeleteTransactionDialogView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type transactionsViewModels:CompleteTransactionDialogViewModel}">
+                <transactionsViews:CompleteTransactionDialogView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

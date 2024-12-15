@@ -9,7 +9,7 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
     {
         private Manager _manager;
         public ObservableCollection<string> AuthorsNames => new(_manager.Authors.Select(a => a.FullName));
-        public EditBookDialogViewModel(Book editedBook)
+        public EditBookDialogViewModel(Book editedBook, BooksPageViewModel parent)
         {
             _manager = ManagerInstance.Instance;
 
@@ -23,7 +23,8 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
             {
                 Author bookAuthor = GetAuthor(SearchAuthorText);
                 if (bookAuthor != null && !string.IsNullOrEmpty(BookName)
-                    && int.TryParse(BookYear, out int year) && int.TryParse(BookId, out int id))
+                    && int.TryParse(BookYear, out int year) && int.TryParse(BookId, out int id)
+                    && id > 0)
                 {
                     if (id == editedBook.Id || UniqueIDMaker.IsUnique(id, _manager.Books))
                     {
@@ -33,11 +34,21 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
                             Name = BookName,
                             BookAuthor = bookAuthor,
                             AuthorId = bookAuthor.Id,
+                            IsAvailable = editedBook.IsAvailable,
                             Year = year
                         };
 
-                        await _manager.EditBookAsync(editedBook, newBook);
-                        CancelCommand.Execute(o);
+                        try
+                        {
+                            await _manager.EditBookAsync(editedBook, newBook);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        CancelCommand.Execute(null);
+                        parent.RefrashTableCommand.Execute(null);
                     }
                     else
                     {
@@ -94,6 +105,7 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
         }
         public RelayCommand EditBookCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
+
         private Author? GetAuthor(string fullName)
         {
             return _manager.Authors.FirstOrDefault(a => a.FullName == fullName);

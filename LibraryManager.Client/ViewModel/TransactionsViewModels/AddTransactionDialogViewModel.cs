@@ -1,13 +1,15 @@
 ﻿using LibraryManager.Client.Core;
 using LibraryManager.Model;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace LibraryManager.Client.ViewModel.TransactionsViewModels
 {
     public class AddTransactionDialogViewModel : ObservableObject
     {
         private Manager _manager;
-        public ObservableCollection<string> BooksNames => new(_manager.Books.Select(b => b.Name));
+        public ObservableCollection<string> BooksNames => new(_manager.Books.Where(b => b.IsAvailable)
+                                                                            .Select(b => b.Name));
         public ObservableCollection<string> VisitorsNames => new(_manager.Visitors.Select(v => v.FullName));
         public AddTransactionDialogViewModel()
         {
@@ -17,7 +19,15 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
                 Book book = GetBook(SearchBookText);
                 Visitor visitor = GetVisitor(SearchVisitorText);
 
-                if (book != null && visitor != null && SelectedDueDate != new DateTime())
+                if (book == null || visitor == null)
+                {
+                    MessageBox.Show("Please fill in all fields");
+                }
+                else if (!book.IsAvailable)
+                {
+                    MessageBox.Show("The book is already taken");
+                }
+                else
                 {
                     LibraryTransaction trans = new()
                     {
@@ -27,7 +37,8 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
                         Visitor = visitor,
                         VisitorId = visitor.Id,
                         DateTaken = DateTime.Now,
-                        DueDate = SelectedDueDate
+                        DueDate = SelectedDueDate,
+                        IsAvailable = true
                     };
                     await _manager.AddTransactionAsync(trans);
                     CancelCommand.Execute(o);

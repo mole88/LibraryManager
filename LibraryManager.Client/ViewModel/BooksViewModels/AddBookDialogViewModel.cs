@@ -15,7 +15,13 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
             AddBookCommand = new RelayCommand(async (o) =>
             {
                 Author bookAuthor = GetAuthor(SearchAuthorText);
-                if (bookAuthor != null && !string.IsNullOrEmpty(BookName) && int.TryParse(BookYear, out int year))
+                if (_manager.Books.Any(b => b.Name == BookName))
+                {
+                    MessageBox.Show($"{BookName} is already exist");
+                }
+                else if (bookAuthor != null 
+                    && !string.IsNullOrEmpty(BookName) 
+                    && int.TryParse(BookYear, out int year))
                 {
                     Book newBook = new()
                     {

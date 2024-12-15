@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using LibraryManager.Client.Core;
 using System.Windows;
 using LibraryManager.Client.SupportClasses;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace LibraryManager.Client.ViewModel.AuthorsViewModels
 {
@@ -36,17 +35,19 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
         public AuthorsPageViewModel()
         {
             _manager = ManagerInstance.Instance;
-            Authors = new(_manager.Authors);
-            _manager.Authors.CollectionChanged += (s, e) =>
+            RefrashAuthors();
+            _manager.Authors.CollectionChanged += (s, e) => RefrashAuthors();
+
+            RefrashTableCommand = new RelayCommand((o) =>
             {
                 Authors = new(_manager.Authors);
-            };
+            });
 
             EditCommand = new RelayCommand((o) =>
             {
                 if (SelectedAuthor != null)
                 {
-                    EditEvent?.Invoke(this, new EditEventArgs(SelectedAuthor));
+                    EditEvent?.Invoke(this, new ObjEventArgs(SelectedAuthor));
                 }
             });
 
@@ -54,7 +55,7 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
             {
                 if (SelectedAuthor != null)
                 {
-                    await _manager.RemoveAuthorAsync(SelectedAuthor);
+                    DeleteEvent?.Invoke(this, new ObjEventArgs(SelectedAuthor));
                 }
             });
 
@@ -68,16 +69,18 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
                 FindEvent?.Invoke(this, EventArgs.Empty);
             });
 
-            RefrashTableCommand = new RelayCommand((o) =>
-            {
-                Authors = new(_manager.Authors);
-            });
-
             SortCommand = new RelayCommand((o) =>
             {
                 MessageBox.Show($"Sort");
             });
 
+        }
+        private void RefrashAuthors()
+        {
+            Authors = new ObservableCollection<Author>(
+                _manager.Authors
+                    .OrderBy(a => a.Id)
+            );
         }
         public RelayCommand EditCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
@@ -87,7 +90,8 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
         public RelayCommand RefrashTableCommand { get; set; }
 
         public event EventHandler AddEvent;
-        public event EventHandler<EditEventArgs> EditEvent;
+        public event EventHandler<ObjEventArgs> EditEvent;
+        public event EventHandler<ObjEventArgs> DeleteEvent;
         public event EventHandler FindEvent;
 
     }

@@ -8,13 +8,5 @@
         public string? PhoneNumber { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public List<LibraryTransaction> Transactions { get; set; } = new();
-        internal void TakeBook(Book book)
-        {
-            //TODO
-        }
-        internal void ReturnBook(Book book)
-        {
-            //TODO
-        }
     }
 }

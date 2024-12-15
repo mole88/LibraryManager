@@ -35,17 +35,14 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
         public VisitorsPageViewModel()
         {
             _manager = ManagerInstance.Instance;
-            Visitors = new(_manager.Visitors);
-            _manager.Visitors.CollectionChanged += (s, e) =>
-            {
-                Visitors = new(_manager.Visitors);
-            };
+            RefrashVisitors();
+            _manager.Visitors.CollectionChanged += (s, e) => RefrashVisitors();
 
             EditCommand = new RelayCommand(async (o) =>
             {
                 if (SelectedVisitor != null)
                 {
-                    EditEvent?.Invoke(this, new EditEventArgs(SelectedVisitor));
+                    EditEvent?.Invoke(this, new ObjEventArgs(SelectedVisitor));
                 }
             });
 
@@ -53,7 +50,7 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
             {
                 if (SelectedVisitor != null)
                 {
-                    await _manager.RemoveVisitorAsync(SelectedVisitor);
+                    DeleteEvent?.Invoke(this, new ObjEventArgs(SelectedVisitor));
                 }
             });
 
@@ -66,6 +63,11 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
             {
                 FindEvent?.Invoke(this, EventArgs.Empty);
             });
+            
+            VisitorBooksCommand = new RelayCommand((o) =>
+            {
+                FilterBooksEvent?.Invoke(this, new ObjEventArgs(SelectedVisitor));
+            });
 
             RefrashTableCommand = new RelayCommand((o) =>
             {
@@ -77,16 +79,26 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
                 MessageBox.Show($"Sort");
             });
         }
+        private void RefrashVisitors()
+        {
+            Visitors = new ObservableCollection<Visitor>(
+                _manager.Visitors
+                    .OrderBy(v => v.Id)
+            );
+        }
         public RelayCommand EditCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
         public RelayCommand AddCommand { get; set; }
         public RelayCommand FindCommand { get; set; }
+        public RelayCommand VisitorBooksCommand { get; set; }
         public RelayCommand SortCommand { get; set; }
         public RelayCommand RefrashTableCommand { get; set; }
 
         public event EventHandler AddEvent;
-        public event EventHandler<EditEventArgs> EditEvent;
+        public event EventHandler<ObjEventArgs> EditEvent;
+        public event EventHandler<ObjEventArgs> DeleteEvent;
         public event EventHandler FindEvent;
+        public event EventHandler<ObjEventArgs> FilterBooksEvent;
 
     }
 }

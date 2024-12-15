@@ -68,7 +68,7 @@ namespace LibraryManager.Client.ViewModel
                 var addBookDialogVM = new AddBookDialogViewModel();
                 addBookDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = addBookDialogVM;
-
+                log.Debug("Book add dialog was opened");
             };
 
             VisitorsVM.AddEvent += (s, e) =>
@@ -76,6 +76,7 @@ namespace LibraryManager.Client.ViewModel
                 var addVisitorDialogVM = new AddVisitorDialogViewModel();
                 addVisitorDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = addVisitorDialogVM;
+                log.Debug("Visitors add dialog was opened");
             };
 
             AuthorsVM.AddEvent += (s, e) =>
@@ -83,6 +84,7 @@ namespace LibraryManager.Client.ViewModel
                 var addAuthorDialogVM = new AddAuthorDialogViewModel();
                 addAuthorDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = addAuthorDialogVM;
+                log.Debug("Authors add dialog was opened");
             };
 
             TransactionsVM.AddEvent += (s, e) =>
@@ -90,41 +92,83 @@ namespace LibraryManager.Client.ViewModel
                 var addTransactionDialogVM = new AddTransactionDialogViewModel();
                 addTransactionDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = addTransactionDialogVM;
+                log.Debug("Transactions add dialog was opened");
             };
 
             //EDIT
             BooksVM.EditEvent += (s, e) =>
             {
-                var editBookDialogVM = new EditBookDialogViewModel((Book)e.EditedItem);
+                var editBookDialogVM = new EditBookDialogViewModel(e.Item as Book, (BooksPageViewModel)s);
 
                 editBookDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = editBookDialogVM;
+                log.Debug("Book edit dialog was opened");
             };
 
             VisitorsVM.EditEvent += (s, e) =>
             {
-                var editVisitorDialogVM = new EditVisitorDialogViewModel((Visitor)e.EditedItem);
+                var editVisitorDialogVM = new EditVisitorDialogViewModel(e.Item as Visitor);
 
                 editVisitorDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = editVisitorDialogVM;
+                log.Debug("Visitor edit dialog was opened");
             };
 
             AuthorsVM.EditEvent += (s, e) =>
             {
-                var editAuthorDialogVM = new EditAuthorDialogViewModel((Author)e.EditedItem);
+                var editAuthorDialogVM = new EditAuthorDialogViewModel(e.Item as Author);
 
                 editAuthorDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = editAuthorDialogVM;
+                log.Debug("Author edit dialog was opened");
             };
 
             TransactionsVM.EditEvent += (s, e) =>
             {
-                var editTransDialogVM = new EditTransactionDialogViewModel((LibraryTransaction)e.EditedItem);
+                var editTransDialogVM = new EditTransactionDialogViewModel(e.Item as LibraryTransaction);
 
                 editTransDialogVM.CancelCommand = CancelDialogCommand;
                 CurrentDialog = editTransDialogVM;
+                log.Debug("Transaction edit dialog was opened");
             };
 
+
+            //DELETE
+            BooksVM.DeleteEvent += (s, e) =>
+            {
+                var deleteBookDialogVM = new DeleteBookDialogViewModel(e.Item as Book);
+
+                deleteBookDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = deleteBookDialogVM;
+                log.Debug("Book delete dialog was opened");
+            };
+
+            VisitorsVM.DeleteEvent += (s, e) =>
+            {
+                var deleteVisDialogVM = new DeleteVisitorDialogViewModel(e.Item as Visitor);
+
+                deleteVisDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = deleteVisDialogVM;
+                log.Debug("Visitor delete dialog was opened");
+            };
+
+            AuthorsVM.DeleteEvent += (s, e) =>
+            {
+                var deleteAuthorDialogVM = new DeleteAuthorDialogViewModel(e.Item as Author);
+
+                deleteAuthorDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = deleteAuthorDialogVM;
+                log.Debug("Author delete dialog was opened");
+            };
+
+            TransactionsVM.DeleteEvent += (s, e) =>
+            {
+                var deleteTransDialogVM = new DeleteTransactionDialogViewModel(e.Item as LibraryTransaction);
+
+                deleteTransDialogVM.CancelCommand = CancelDialogCommand;
+                CurrentDialog = deleteTransDialogVM;
+                log.Debug("Transaction delete dialog was opened");
+            };
             //FIND
             BooksVM.FindEvent += (s, e) =>
             {
@@ -132,6 +176,7 @@ namespace LibraryManager.Client.ViewModel
                 findBookDialogVM.CancelCommand = CancelDialogCommand;
 
                 CurrentDialog = findBookDialogVM;
+                log.Debug("Find book dialog was opened");
             };
 
             VisitorsVM.FindEvent += (s, e) =>
@@ -140,23 +185,60 @@ namespace LibraryManager.Client.ViewModel
                 findVisitorDialogVM.CancelCommand = CancelDialogCommand;
 
                 CurrentDialog = findVisitorDialogVM;
+                log.Debug("Find visitor dialog was opened");
             };
 
             TransactionsVM.FindEvent += (s, e) =>
             {
-                var findTransDialogVM = new FindTransactionDialogViewModel(((TransactionsPageViewModel)s).Transactions);
+                var trans = ((TransactionsPageViewModel)s).Transactions;
+                var findTransDialogVM = new FindTransactionDialogViewModel(trans);
                 findTransDialogVM.CancelCommand = CancelDialogCommand;
 
                 CurrentDialog = findTransDialogVM;
+                log.Debug("Find transaction dialog was opened");
             };
 
             AuthorsVM.FindEvent += (s, e) =>
             {
-                var findAuthorDialogVM = new FindAuthorDialogViewModel(((AuthorsPageViewModel)s).Authors);
+                var authors = ((AuthorsPageViewModel)s).Authors;
+                var findAuthorDialogVM = new FindAuthorDialogViewModel(authors);
                 findAuthorDialogVM.CancelCommand = CancelDialogCommand;
 
                 CurrentDialog = findAuthorDialogVM;
+                log.Debug("Find author dialog was opened");
             };
+            //FILTER
+            VisitorsVM.FilterBooksEvent += (s, e) =>
+            {
+                Visitor curVis = e.Item as Visitor;
+                if (curVis != null)
+                {
+                    BooksVM.Books = new(
+                    curVis.Transactions
+                        .Where(t => t.IsAvailable)
+                        .Select(t => t.Book)
+                        .GroupBy(b => b.Id)
+                        .Select(g => g.First()));
+
+                    BooksVM.TopMessage = $"{curVis.FullName}'s books";
+                    CurrentView = BooksVM;
+                    log.Debug($"{curVis.FullName}'s books filtered");
+                }
+            };
+
+            //COMPLETE TRANSACTION
+            TransactionsVM.CompleteEvent += (s, e) =>
+            {
+                var completeTransDialogVM = new CompleteTransactionDialogViewModel(e.Item as LibraryTransaction);
+                completeTransDialogVM.CancelCommand = CancelDialogCommand;
+
+                completeTransDialogVM.TransactionCompleted += (s, e) => TransactionsVM.RefrashTransactions();
+
+                CurrentDialog = completeTransDialogVM;
+                log.Debug("Complete transaction dialog opened");
+            };
+
+            
         }
 
         public BooksPageViewModel BooksVM { get; set; } = new();

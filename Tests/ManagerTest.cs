@@ -5,7 +5,7 @@ namespace LibraryManager.Tests
     public class ManagerTest
     {
         [Fact]
-        public void AddBookTest()
+        public async Task AddBookTest()
         {
             var manager = new Manager();
 
@@ -18,7 +18,7 @@ namespace LibraryManager.Tests
                 Name = "TestBook",
                 Year = 1010
             };
-            manager.AddBook(newBook);
+            await manager.AddBookAsync(newBook);
 
             int newBooksCount = manager.Books.Count;
 

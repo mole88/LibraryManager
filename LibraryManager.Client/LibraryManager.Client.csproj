@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\complete32.png" />
     <None Remove="Images\refresh32.png" />
     <None Remove="Other\DBConnectionInfo.xml" />
   </ItemGroup>
@@ -17,6 +18,7 @@
 	<Resource Include="Images\add32.png" />
     <Resource Include="Images\author32.png" />
     <Resource Include="Images\book32.png" />
+    <Resource Include="Images\complete32.png" />
     <Resource Include="Images\cross32.png" />
     <Resource Include="Images\delete32.png" />
     <Resource Include="Images\edit32.png" />
@@ -40,6 +42,21 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraryManager.Model\LibraryManager.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="View\AuthorsViews\DeleteAuthorDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\BooksViews\DeleteBookDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\TransactionsViews\DeleteTransactionDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\VisitorsViews\DeleteVisitorDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

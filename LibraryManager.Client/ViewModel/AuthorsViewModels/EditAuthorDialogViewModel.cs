@@ -1,10 +1,5 @@
 ﻿using LibraryManager.Client.Core;
 using LibraryManager.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryManager.Client.ViewModel.AuthorsViewModels
 {
@@ -28,6 +23,7 @@ namespace LibraryManager.Client.ViewModel.AuthorsViewModels
                         FullName = AuthorName,
                     };
                     await _manager.EditAuthorAsync(editedAuthor, newAuthor);
+
                     CancelCommand.Execute(o);
                 }
             });

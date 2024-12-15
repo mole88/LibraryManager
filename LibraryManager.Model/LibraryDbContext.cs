@@ -146,6 +146,10 @@ namespace LibraryManager.Model
                        v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
                        v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc).ToLocalTime() : (DateTime?)null);
 
+                entity.Property(t => t.IsAvailable)
+                      .HasColumnName("is_available")
+                      .IsRequired();
+
                 entity.Property(t => t.BookId)
                       .HasColumnName("book_id")
                       .IsRequired();

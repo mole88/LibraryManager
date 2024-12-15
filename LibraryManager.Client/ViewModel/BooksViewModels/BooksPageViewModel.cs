@@ -39,17 +39,16 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
         public BooksPageViewModel()
         {
             _manager = ManagerInstance.Instance;
-            Books = new(_manager.Books);
-            _manager.Books.CollectionChanged += (s, e) =>
-            {
-                Books = new(_manager.Books);
-            };
+            RefrashBooks();
+            _manager.Books.CollectionChanged += (s, e) => RefrashBooks();
 
             EditCommand = new RelayCommand((o) =>
             {
                 if (SelectedBook != null)
                 {
-                    EditEvent?.Invoke(this, new EditEventArgs(SelectedBook));
+                    EditEvent?.Invoke(this, new ObjEventArgs(SelectedBook));
+                    RefrashBooks();
+                    TopMessage = "";
                     log.Info("Book edited");
                 }
             });
@@ -58,34 +57,59 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
             {
                 if (SelectedBook != null)
                 {
-                    await _manager.RemoveBookAsync(SelectedBook);
+                    DeleteEvent?.Invoke(this, new ObjEventArgs(SelectedBook));
+                    RefrashBooks();
+                    TopMessage = "";
                     log.Info("Book deleted");
                 }
             });
 
             FindCommand = new RelayCommand((o) =>
             {
+                RefrashBooks();
                 FindEvent?.Invoke(this, EventArgs.Empty);
+                TopMessage = "";
                 log.Info("Book found");
             });
 
             RefrashTableCommand = new RelayCommand((o) =>
             {
-                Books = new(_manager.Books);
+                RefrashBooks();
+                TopMessage = "";
                 log.Debug("Book table refrashed");
             });
 
             SortCommand = new RelayCommand((o) =>
             {
                 MessageBox.Show($"Sort");
-
+                RefrashBooks();
+                TopMessage = "";
             });
 
             AddCommand = new RelayCommand((o) =>
             {
                 AddEvent?.Invoke(this, EventArgs.Empty);
+                RefrashBooks();
+                TopMessage = "";
                 log.Info("Book added");
             });
+        }
+        private void RefrashBooks()
+        {
+            Books = new ObservableCollection<Book>(
+                _manager.Books
+                    .OrderBy(b => !b.IsAvailable)
+                    .ThenBy(b => b.Id)            
+            );
+        }
+        private string _topMessage;
+        public string TopMessage
+        {
+            get { return _topMessage; }
+            set { 
+                _topMessage = value; 
+                OnPropertyChanged(nameof(TopMessage));
+            }
         }
 
         public RelayCommand EditCommand { get; set; }
@@ -96,7 +120,8 @@ namespace LibraryManager.Client.ViewModel.BooksViewModels
         public RelayCommand RefrashTableCommand { get; set; }
 
         public event EventHandler AddEvent;
-        public event EventHandler<EditEventArgs> EditEvent;
+        public event EventHandler<ObjEventArgs> EditEvent;
+        public event EventHandler<ObjEventArgs> DeleteEvent;
         public event EventHandler FindEvent;
     }
 }

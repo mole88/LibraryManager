@@ -15,7 +15,7 @@ namespace LibraryManager.Client.Reports
         public async Task GenerateReportAsync()
         {
             var books = _manager.Books;
-
+            var stat = new Statistics();
             await Task.Run(async () =>
             {
                 Document.Create(container =>
@@ -35,25 +35,10 @@ namespace LibraryManager.Client.Reports
                         {
                             column.Spacing(10);
 
-                            column.Item().Text("Books in library").SemiBold().AlignCenter();
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.RelativeColumn();
-                                    columns.RelativeColumn();
-                                    columns.RelativeColumn();
-                                    columns.RelativeColumn();
-                                });
-
-                                for (int i = 0; i < _manager.Books.Count; i++)
-                                {
-                                    table.Cell().Text(books[i].Id);
-                                    table.Cell().Text(books[i].Name);
-                                    table.Cell().Text(books[i].BookAuthor.FullName);
-                                    table.Cell().Text(books[i].Year);
-                                }
-                            });
+                            column.Item().Text($"Current users count: {_manager.Visitors.Count}");
+                            column.Item().Text($"New users this month: {stat.NewVisitorsMonth}");
+                            column.Item().Text($"Books borrowed this month: {stat.NewTransactionsMonth}");
+                            
                         });
 
                         page.Footer()

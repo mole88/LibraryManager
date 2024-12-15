@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Transactions;
 using LibraryManager.Model.Exceptions;
-using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManager.Model
 {
@@ -9,10 +9,11 @@ namespace LibraryManager.Model
         public ObservableCollection<LibraryTransaction> Transactions { get; private set; }
         public ObservableCollection<Visitor> Visitors { get; private set; }
         public ObservableCollection<Book> Books { get; private set; }
-        public  ObservableCollection<Author> Authors { get; private set; }
+        public ObservableCollection<Author> Authors { get; private set; }
 
         private readonly LibraryDbContext _dbContext;
-        private readonly string dbInfoFilePath = "D:/proj/Visual Studio/LibManage/Other/DBConnectionInfo.xml";
+        private readonly string dbInfoFilePath = "./Other/DBConnectionInfo.xml";
+
         public Manager()
         {
             try
@@ -26,82 +27,179 @@ namespace LibraryManager.Model
                 Transactions = new ObservableCollection<LibraryTransaction>(_dbContext.Transactions);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new DbConnectionException("Ошибка подключения к базе данных:\n" + ex.Message);
+                throw new DbConnectionException("Ошибка подключения к базе данных: " + ex.Message, ex);
             }
         }
+
         public async Task AddVisitorAsync(Visitor visitor)
         {
-            Visitors.Add(visitor);
-            _dbContext.Visitors.Add(visitor);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                Visitors.Add(visitor);
+                _dbContext.Visitors.Add(visitor);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new AddRecordException("Ошибка добавления посетителя: " + ex.Message, ex);
+            }
         }
+
         public async Task AddBookAsync(Book book)
         {
-            Books.Add(book);
-            _dbContext.Books.Add(book);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                Books.Add(book);
+                _dbContext.Books.Add(book);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new AddRecordException("Ошибка добавления книги: " + ex.Message, ex);
+            }
         }
+
         public async Task AddAuthorAsync(Author author)
         {
-            Authors.Add(author);
-            _dbContext.Authors.Add(author);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                Authors.Add(author);
+                _dbContext.Authors.Add(author);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new AddRecordException("Ошибка добавления автора:", ex);
+            }
         }
+
         public async Task AddTransactionAsync(LibraryTransaction transaction)
         {
-            Transactions.Add(transaction);
-            _dbContext.Transactions.Add(transaction);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                if (transaction.Book.IsAvailable)
+                {
+                    transaction.Book.IsAvailable = false;
+                    Transactions.Add(transaction);
+                    _dbContext.Transactions.Add(transaction);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new TransactionException("Ошибка добавления транзакции: " + ex.Message, ex);
+            }
         }
 
         public async Task RemoveVisitorAsync(Visitor visitor)
         {
-            Visitors.Remove(visitor);
-            _dbContext.Visitors.Remove(visitor);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                if (visitor != null)
+                {
+                    var transactionsToRemove = Transactions.Where(t => t.Visitor == visitor).ToList();
+                    foreach (var transaction in transactionsToRemove)
+                    {
+                        transaction.Book.IsAvailable = true;
+                        Transactions.Remove(transaction);
+                        _dbContext.Transactions.Remove(transaction);
+                    }
+
+                    Visitors.Remove(visitor);
+                    _dbContext.Visitors.Remove(visitor);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RemoveRecordException("Ошибка удаления посетителя: " + ex.Message, ex);
+            }
         }
+
         public async Task RemoveBookAsync(Book book)
         {
-            Books.Remove(book);
-            _dbContext.Books.Remove(book);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                if (book != null && book.IsAvailable)
+                {
+                    var transactionsToRemove = Transactions.Where(t => t.Book == book).ToList();
+                    foreach (var transaction in transactionsToRemove)
+                    {
+                        Transactions.Remove(transaction);
+                        _dbContext.Transactions.Remove(transaction);
+                    }
+
+                    Books.Remove(book);
+                    _dbContext.Books.Remove(book);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RemoveRecordException("Ошибка удаления книги: " + ex.Message, ex);
+            }
         }
+
         public async Task RemoveAuthorAsync(Author author)
         {
-            Authors.Remove(author);
-            _dbContext.Authors.Remove(author);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                if (author != null)
+                {
+                    var booksToRemove = Books.Where(b => b.AuthorId == author.Id).ToList();
+                    foreach (var book in booksToRemove)
+                    {
+                        await RemoveBookAsync(book);
+                    }
+                    Authors.Remove(author);
+                    _dbContext.Authors.Remove(author);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RemoveRecordException("Ошибка удаления автора: " + ex.Message, ex);
+            }
         }
         public async Task RemoveTransactionAsync(LibraryTransaction transaction)
         {
-            Transactions.Remove(transaction);
-            _dbContext.Transactions.Remove(transaction);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                if (transaction != null)
+                {
+                    transaction.Book.IsAvailable = true;
+                    transaction.Visitor.Transactions.Remove(transaction);
+                    Transactions.Remove(transaction);
+                    _dbContext.Transactions.Remove(transaction);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new EditRecordException("Ошибка удаления книги: " + ex.Message, ex);
+            }
         }
 
-        //ИСПРАВИТЬ ИЗМЕНЕНИЕ ID
         public async Task EditBookAsync(Book oldVer, Book newVer)
         {
             int index = Books.IndexOf(oldVer);
-            if (index == -1)
-                throw new InvalidOperationException("Книга не найдена в коллекции.");
-
             var existingBook = await _dbContext.Books.FindAsync(oldVer.Id);
-            if (existingBook == null)
-                throw new InvalidOperationException("Книга не найдена в базе данных.");
 
             if (oldVer.Id != newVer.Id)
             {
                 var newBookWithSameId = await _dbContext.Books.FindAsync(newVer.Id);
                 if (newBookWithSameId != null)
-                    throw new InvalidOperationException("Книга с таким ID уже существует.");
+                    throw new EditRecordException("Книга с таким ID уже существует.");
 
                 using var transaction = await _dbContext.Database.BeginTransactionAsync();
                 try
                 {
-                    // 1. Добавляем или обновляем новую книгу с новым ID
                     var newBook = new Book
                     {
                         Id = newVer.Id,
@@ -111,65 +209,76 @@ namespace LibraryManager.Model
                         IsAvailable = newVer.IsAvailable,
                         CreationDate = newVer.CreationDate
                     };
-                    _dbContext.Books.Add(newBook); // Вставляем запись с новым ID
+                    _dbContext.Books.Add(newBook);
+
                     await _dbContext.SaveChangesAsync();
-
-                    // 2. Обновляем внешние ключи в таблице transactions
-                    await _dbContext.Transactions
-                        .Where(t => t.BookId == oldVer.Id)
-                        .ExecuteUpdateAsync(t => t.SetProperty(t => t.BookId, newVer.Id));
-
-                    // 3. Удаляем старую книгу
+                    foreach (var transactionToUpdate in _dbContext.Transactions.Where(t => t.BookId == oldVer.Id))
+                    {
+                        transactionToUpdate.BookId = newVer.Id;
+                    }
+                    await _dbContext.SaveChangesAsync();
                     _dbContext.Books.Remove(existingBook);
                     await _dbContext.SaveChangesAsync();
-
-                    // Завершаем транзакцию
                     await transaction.CommitAsync();
+                    Books[index] = newBook;
                 }
-                catch
+                catch(Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    throw;
+
+                    throw new EditRecordException("Ошибка редактирования книги: " + ex.Message, ex);
                 }
             }
             else
             {
                 _dbContext.Entry(existingBook).CurrentValues.SetValues(newVer);
                 await _dbContext.SaveChangesAsync();
+                Books[index] = newVer;
             }
         }
-
-
         public async Task EditVisitorAsync(Visitor oldVer, Visitor newVer)
         {
-            int index = Visitors.IndexOf(oldVer);
-            if (index != -1)
+            try
             {
-                var existingVisitor = await _dbContext.Visitors.FindAsync(oldVer.Id);
+                int index = Visitors.IndexOf(oldVer);
+                if (index != -1)
+                {
+                    var existingVisitor = await _dbContext.Visitors.FindAsync(oldVer.Id);
 
-                if (existingVisitor != null)
-                {    
-                    _dbContext.Entry(existingVisitor).CurrentValues.SetValues(newVer);
-                    await _dbContext.SaveChangesAsync();
-                    Visitors[index] = newVer;
+                    if (existingVisitor != null)
+                    {
+                        _dbContext.Entry(existingVisitor).CurrentValues.SetValues(newVer);
+                        await _dbContext.SaveChangesAsync();
+                        Visitors[index] = newVer;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                throw new EditRecordException("Ошбика изменения посетителя: " + ex.Message, ex);
+            }
         }
-
         public async Task EditAuthorAsync(Author oldVer, Author newVer)
         {
-            int index = Authors.IndexOf(oldVer);
-            if (index != -1)
+            try
             {
-                var existingAuthor = await _dbContext.Authors.FindAsync(oldVer.Id);
-
-                if (existingAuthor != null)
+                int index = Authors.IndexOf(oldVer);
+                if (index != -1)
                 {
-                    _dbContext.Entry(existingAuthor).CurrentValues.SetValues(newVer);
-                    await _dbContext.SaveChangesAsync();
+                    var existingAuthor = await _dbContext.Authors.FindAsync(oldVer.Id);
 
-                    Authors[index] = newVer;
+                    if (existingAuthor != null)
+                    {
+                        _dbContext.Entry(existingAuthor).CurrentValues.SetValues(newVer);
+                        await _dbContext.SaveChangesAsync();
+
+                        Authors[index] = newVer;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new EditRecordException("Ошибка изменения автора: " + ex.Message, ex);
             }
         }
 
@@ -178,18 +287,66 @@ namespace LibraryManager.Model
             int index = Transactions.IndexOf(oldVer);
             if (index != -1)
             {
-                var existingTrans = await _dbContext.Transactions.FindAsync(oldVer.Id);
 
-                if (existingTrans != null)
+                using var action = await _dbContext.Database.BeginTransactionAsync();
+                try
                 {
-                    _dbContext.Entry(existingTrans).CurrentValues.SetValues(newVer);
+                    _dbContext.Transactions.Remove(oldVer);
                     await _dbContext.SaveChangesAsync();
 
-                    Transactions[index] = newVer;
+                    var newBook = new LibraryTransaction
+                    {
+                        Id = newVer.Id,
+                        Book = newVer.Book,
+                        BookId = newVer.Id,
+                        Visitor = newVer.Visitor,
+                        VisitorId = newVer.VisitorId,
+                        DateTaken = newVer.DateTaken,
+                        DueDate = newVer.DueDate,
+                        ReturnDate = newVer.ReturnDate,
+                        IsAvailable = newVer.IsAvailable
+                    };
+                    _dbContext.Transactions.Add(newBook);
+                    await _dbContext.SaveChangesAsync();
+
+                    await action.CommitAsync();
+
+                    Transactions[index] = newBook;
+                    if (newVer.Book != oldVer.Book)
+                    {
+                        newVer.Book.IsAvailable = false;
+                        oldVer.Book.IsAvailable = true;
+                    }
+
+                    var existingTrans = await _dbContext.Transactions.FindAsync(oldVer.Id);
+                    _dbContext.Entry(existingTrans).CurrentValues.SetValues(newVer);
+                }
+                catch (Exception ex)
+                {
+                    await action.RollbackAsync();
+                    throw new EditRecordException("Ошибка изменения транзакции: " + ex.Message, ex);
                 }
             }
         }
+        public async Task CompleteTransactionAsync(LibraryTransaction transaction)
+        {
+            try
+            {
+                if (transaction != null && transaction.IsAvailable == true)
+                {
+                    transaction.Book.IsAvailable = true;
+                    transaction.ReturnDate = DateTime.Now;
+                    transaction.IsAvailable = false;
 
+                    _dbContext.Transactions.Update(transaction);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new CompleteTransactionException("Ошибка завершения транзакции: " + ex.Message, ex);
+            }
+        }
         public Book? FindBook(int id)
         {
             return Books.FirstOrDefault(b => b.Id == id);

@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="800">
     <UserControl.Resources>
         <SolidColorBrush x:Key="ListViewItemMouseOverBackground">#4d79ff</SolidColorBrush>
         <SolidColorBrush x:Key="ListViewItemMouseOverForeground">White</SolidColorBrush>
@@ -15,6 +14,11 @@
     </UserControl.Resources>
     <Grid>
         <StackPanel>
+            <TextBlock Text="{Binding TopMessage}"
+                       FontSize="24"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       Margin="10"/>
             <Border CornerRadius="10"
                     Padding="4">
                 <Border.Background>
@@ -27,7 +31,8 @@
                           SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
                           Height="400"
                           Style="{StaticResource ListViewStyle}"
-                          ItemContainerStyle="{StaticResource ListViewItemStyle}">
+                          ItemContainerStyle="{StaticResource BooksListViewItemStyle}"
+                          >
 
                     <ListView.ContextMenu>
                         <ContextMenu Style="{StaticResource ContextMenuStyle}"
@@ -107,7 +112,8 @@
                     </Button>
 
                     <Button Style="{StaticResource OperationButtonTheme}"
-                            Command="{Binding SortCommand}">
+                            Command="{Binding SortCommand}"
+                            Visibility="Collapsed">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../../Images/sort32.png"
                                    Margin="0, 0, 4, 0"

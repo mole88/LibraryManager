@@ -7,7 +7,8 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
     public class EditTransactionDialogViewModel : ObservableObject
     {
         private Manager _manager;
-        public ObservableCollection<string> BooksNames => new(_manager.Books.Select(b => b.Name));
+        public ObservableCollection<string> BooksNames => new(_manager.Books.Where(b => b.IsAvailable)
+                                                                                         .Select(b => b.Name));
         public ObservableCollection<string> VisitorsNames => new(_manager.Visitors.Select(v => v.FullName));
         public EditTransactionDialogViewModel(LibraryTransaction editedTrans)
         {
@@ -32,7 +33,9 @@ namespace LibraryManager.Client.ViewModel.TransactionsViewModels
                         Visitor = visitor,
                         VisitorId = visitor.Id,
                         DateTaken = editedTrans.DateTaken,
-                        DueDate = SelectedDueDate
+                        DueDate = SelectedDueDate,
+                        ReturnDate = editedTrans.ReturnDate,
+                        IsAvailable = editedTrans.IsAvailable
                     };
                     await _manager.EditTransactionAsync(editedTrans, trans);
                     CancelCommand.Execute(o);

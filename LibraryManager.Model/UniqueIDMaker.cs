@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Model
 {
-    static public class UniqueIDMaker
+    public static class UniqueIDMaker
     {
         public static int GetUniqueID<T>(IEnumerable<T> array) where T : IIdentifiable
         {

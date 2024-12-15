@@ -1,5 +1,6 @@
 ﻿using LibraryManager.Client.Core;
 using LibraryManager.Model;
+using System.Windows;
 
 namespace LibraryManager.Client.ViewModel.VisitorsViewModels
 {
@@ -12,7 +13,11 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
             _manager = ManagerInstance.Instance;
             AddVisitorCommand = new RelayCommand(async (o) =>
             {
-                if (!string.IsNullOrEmpty(VisitorPhone) && !string.IsNullOrEmpty(VisitorName) && int.TryParse(VisitorAge, out int age))
+                if (_manager.Visitors.Any(v => v.FullName == VisitorName))
+                {
+                    MessageBox.Show($"{VisitorName} is already exist.");
+                }
+                else if (!string.IsNullOrEmpty(VisitorPhone) && !string.IsNullOrEmpty(VisitorName) && int.TryParse(VisitorAge, out int age))
                 {
                     Visitor newVisitor = new()
                     {
@@ -57,7 +62,6 @@ namespace LibraryManager.Client.ViewModel.VisitorsViewModels
                 OnPropertyChanged(nameof(VisitorAge));
             }
         }
-
         public RelayCommand AddVisitorCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
     }
