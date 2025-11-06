@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="LibraryManager.Client.View.VisitorsViews.AddVisitorDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Border Background="#272537"
+            CornerRadius="10"
+            Height="250"
+            Width="250">
+            <StackPanel>
+                <TextBlock Text="New Visitor"
+                       Foreground="White"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="0, 4, 0, 10"/>
+
+                <TextBox Tag="Fullname"
+                         Style="{StaticResource ResourceKey=TextBoxTheme}"
+                         Margin="5"
+                         Text="{Binding VisitorName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBox Tag="Age"
+                         Style="{StaticResource ResourceKey=TextBoxTheme}"
+                         Margin="5"
+                         Text="{Binding VisitorAge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         InputScope="Number"
+                         PreviewTextInput="NumericTextBox_PreviewTextInput"/>
+
+                <TextBox Tag="Phone number"
+                         Style="{StaticResource ResourceKey=TextBoxTheme}"
+                         Margin="5"
+                         Text="{Binding VisitorPhone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                <Button Style="{StaticResource CommonButtonTheme}"
+                    Content="Add"
+                    FontSize="16"
+                    Margin="4"
+                    Command="{Binding AddVisitorCommand}"
+                    HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -9,26 +9,59 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\complete32.png" />
+    <None Remove="Images\refresh32.png" />
+    <None Remove="Other\DBConnectionInfo.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<Resource Include="Images\add32.png" />
     <Resource Include="Images\author32.png" />
     <Resource Include="Images\book32.png" />
+    <Resource Include="Images\complete32.png" />
     <Resource Include="Images\cross32.png" />
     <Resource Include="Images\delete32.png" />
     <Resource Include="Images\edit32.png" />
+    <Resource Include="Images\refresh32.png" />
     <Resource Include="Images\stat32.png" />
     <Resource Include="Images\transactions32.png" />
     <Resource Include="Images\user32.png" />
     <Resource Include="Images\search32.png" />
     <Resource Include="Images\sort32.png" />
     <Resource Include="Images\minimize32.png" />
+    <EmbeddedResource Include="Other\DBConnectionInfo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="NLog" Version="5.3.4" />
+    <PackageReference Include="QuestPDF" Version="2024.10.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LibraryManager.Model\LibraryManager.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="View\AuthorsViews\DeleteAuthorDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\BooksViews\DeleteBookDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\TransactionsViews\DeleteTransactionDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\VisitorsViews\DeleteVisitorDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

@@ -9,7 +9,6 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="Foreground" Value="White"/>
-
     </Style>
 
     <Style TargetType="GridViewColumnHeader"
@@ -29,8 +28,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="ListViewItem"
-           x:Key="ListViewItemStyle">
+    <Style TargetType="ListViewItem" x:Key="BaseListViewItemStyle">
         <Setter Property="BorderThickness" Value="0"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -41,6 +39,23 @@
                 <Setter Property="Background" Value="{DynamicResource ListViewItemSelectedBackground}" />
                 <Setter Property="Foreground" Value="{DynamicResource ListViewItemSelectedForeground}" />
             </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="BooksListViewItemStyle" BasedOn="{StaticResource BaseListViewItemStyle}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsAvailable}" Value="False">
+                <Setter Property="Foreground" Value="#FFAAAAAA"/>
+                <Setter Property="IsEnabled" Value="False"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="TransactionsListViewItemStyle" BasedOn="{StaticResource BaseListViewItemStyle}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsAvailable}" Value="False">
+                <Setter Property="Foreground" Value="#FFAAAAAA"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 
@@ -73,6 +88,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
     </Style>
 
 </ResourceDictionary>

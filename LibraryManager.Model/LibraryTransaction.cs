@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Model
 {
-    public class LibraryTransaction
+    public class LibraryTransaction : IIdentifiable
     {
         public int Id { get; set; }
         public int VisitorId { get; set; }
@@ -10,5 +10,6 @@
         public DateTime DateTaken { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

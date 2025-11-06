@@ -3,17 +3,75 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:LibraryManager.Client.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="700">
+             d:DesignHeight="500" d:DesignWidth="700">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel>
             <TextBlock Text="Month statistics:"
+                       Foreground="White"
+                       FontSize="28"
+                       Margin="0, 30, 0, 10"/>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="Margin" Value="0, 0, 10, 0"/>
+                        <Setter Property="Width" Value="150"/>
+                        <Setter Property="Height" Value="150"/>
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+
+                </StackPanel.Resources>
+                <Border Background="#844eff">
+                    <TextBlock Foreground="White"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center">  
+                        <Run Text="New books" FontSize="16"/>
+                        <LineBreak/>
+                        <Run Text="{Binding NewBooksMonth}" FontSize="46" />
+                    </TextBlock>
+                </Border>
+
+                <Border Background="#4e99ff">
+                    <TextBlock Foreground="White"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center">
+                        <Run Text="New visitors" FontSize="16"/>
+                        <LineBreak/>
+                        <Run Text="{Binding NewVisitorsMonth}" FontSize="46" />
+                    </TextBlock>
+                </Border>
+
+
+                <Border Background="#00e658">
+                    <TextBlock Foreground="White"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center">
+                        <Run Text="New authors" FontSize="16"/>
+                        <LineBreak/>
+                        <Run Text="{Binding NewAuthorsMonth}" FontSize="46" />
+                    </TextBlock>
+                </Border>
+
+                <Border Background="Blue">
+                    <TextBlock Foreground="White"
+                               TextAlignment="Center"
+                               VerticalAlignment="Center">
+                        <Run Text="New transactions" FontSize="16"/>
+                        <LineBreak/>
+                        <Run Text="{Binding NewTransactionsMonth}" FontSize="46" />
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Total statistics:"
                        Foreground="White"
                        FontSize="28"
                        Margin="0, 0, 0, 10"/>
@@ -21,63 +79,59 @@
                 <StackPanel.Resources>
                     <Style TargetType="Border">
                         <Setter Property="Margin" Value="0, 0, 10, 0"/>
+                        <Setter Property="Width" Value="150"/>
+                        <Setter Property="Height" Value="150"/>
+                        <Setter Property="CornerRadius" Value="10"/>
                     </Style>
 
                 </StackPanel.Resources>
-                <Border Background="#844eff"
-                        Height="150"
-                        Width="150"
-                        CornerRadius="10">
+                <Border Background="#ff3399">
                     <TextBlock Foreground="White"
                                TextAlignment="Center"
                                VerticalAlignment="Center">  
                         <Run Text="New books" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewBooksAllTime, Mode=TwoWay}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
-                <Border Background="#4e99ff"
-                        Height="150"
-                        Width="150"
-                        CornerRadius="10">
+                <Border Background="#ff5050">
                     <TextBlock Foreground="White"
                                TextAlignment="Center"
-                               VerticalAlignment="Center">
+                               VerticalAlignment="Center">  
                         <Run Text="New visitors" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewVisitorsAllTime}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
-
-                <Border Background="#00e658"
-                        Height="150"
-                        Width="150"
-                        CornerRadius="10">
+                <Border Background="#00cc99">
                     <TextBlock Foreground="White"
                                TextAlignment="Center"
                                VerticalAlignment="Center">
                         <Run Text="New authors" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewAuthorsAllTime}" FontSize="46" />
                     </TextBlock>
                 </Border>
 
-                <Border Background="Blue"
-                        Height="150"
-                        Width="150"
-                        CornerRadius="10">
+                <Border Background="#99cc00">
                     <TextBlock Foreground="White"
                                TextAlignment="Center"
                                VerticalAlignment="Center">
                         <Run Text="New transactions" FontSize="16"/>
                         <LineBreak/>
-                        <Run Text="52" FontSize="46" />
+                        <Run Text="{Binding NewTransactionsAllTime}" FontSize="46" />
                     </TextBlock>
                 </Border>
             </StackPanel>
         </StackPanel>
-        
+
+        <Button Grid.Row="2"
+                Style="{StaticResource OperationButtonTheme}"
+                Content="Generate PDF report"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding GenerateReportCommand}"/>
     </Grid>
 </UserControl>

@@ -1,0 +1,18 @@
+﻿using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using System.Windows.Input;
+
+namespace LibraryManager.Client.View.BooksViews
+{
+    public partial class AddBookDialogView : UserControl
+    {
+        public AddBookDialogView()
+        {
+            InitializeComponent();
+        }
+        private void NumericTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !Regex.IsMatch(e.Text, "^[0-9]+$");
+        }
+    }
+}

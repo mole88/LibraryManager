@@ -4,13 +4,18 @@ namespace LibraryManager.Model
 {
     public class LibraryDbContext : DbContext
     {
+        private string DBConnectionString;
         public DbSet<Visitor> Visitors { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<LibraryTransaction> Tranactions { get; set; }
+        public DbSet<LibraryTransaction> Transactions { get; set; }
+        public LibraryDbContext(string connectionString)
+        {
+            DBConnectionString = connectionString;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=0000");
+            optionsBuilder.UseNpgsql(DBConnectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +51,13 @@ namespace LibraryManager.Model
                     .HasColumnName("is_available")
                     .IsRequired();
 
+                entity.Property(t => t.CreationDate)
+                      .HasColumnName("creation_date")
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
+
                 entity.HasOne(b => b.BookAuthor)
                   .WithMany(a => a.Books)
                   .HasForeignKey(b => b.AuthorId);
@@ -65,6 +77,13 @@ namespace LibraryManager.Model
                 entity.Property(a => a.FullName)
                     .HasColumnName("fullname")
                     .IsRequired();
+
+                entity.Property(t => t.CreationDate)
+                      .HasColumnName("creation_date")
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
             });
         }
         private void CreateVisitors(ModelBuilder mb)
@@ -88,6 +107,13 @@ namespace LibraryManager.Model
                 entity.Property(v => v.PhoneNumber)
                     .HasColumnName("phone_number")
                     .IsRequired();
+
+                entity.Property(t => t.CreationDate)
+                      .HasColumnName("creation_date")
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
             });
         }
         private void CreateTransactions(ModelBuilder mb)
@@ -102,14 +128,27 @@ namespace LibraryManager.Model
 
                 entity.Property(t => t.DateTaken)
                       .HasColumnName("date_taken")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
 
                 entity.Property(t => t.DueDate)
                       .HasColumnName("due_date")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc).ToLocalTime());
 
                 entity.Property(t => t.ReturnDate)
-                    .HasColumnName("date_return");
+                    .HasColumnName("date_return")
+                    .HasConversion(
+                       v => v.HasValue ? v.Value.ToUniversalTime() : (DateTime?)null,
+                       v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc).ToLocalTime() : (DateTime?)null);
+
+                entity.Property(t => t.IsAvailable)
+                      .HasColumnName("is_available")
+                      .IsRequired();
 
                 entity.Property(t => t.BookId)
                       .HasColumnName("book_id")
